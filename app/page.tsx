@@ -566,7 +566,7 @@ variant={"ghost"} className='rounded-full text-xs mr-2'> Clear</Button>
 
 
       {renderCartComponent()}
-      <Drawer>
+      {/* <Drawer>
   <DrawerTrigger className=''>
   Submit booking</DrawerTrigger>
   <DrawerContent>
@@ -583,7 +583,7 @@ variant={"ghost"} className='rounded-full text-xs mr-2'> Clear</Button>
       </DrawerClose>
     </DrawerFooter>
   </DrawerContent>
-</Drawer>
+</Drawer> */}
       
       <div className='mb-20'/>
     </main>
