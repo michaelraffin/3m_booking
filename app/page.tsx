@@ -56,7 +56,7 @@ export default function Home() {
   const [date, setDate] = useState<Date | null>(null);
   
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
-  const [products, setProduct] = useState<String>([]);
+  const [products, setProduct] = useState<String[]>([]);
   const [status, setStatus] = useState(false)
   const [selectedService, setSelectedService] = useState({ id: 0, price: 0 })
 
