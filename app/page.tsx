@@ -2,7 +2,6 @@
 import React, { useEffect, useState,useRef } from 'react';
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
-import Sheet from "@/app/local/sheet"
 import { Calendar } from "@/components/ui/calendar"
 import { isSameDay } from 'date-fns';
 import { Badge } from "@/components/ui/badge"
@@ -54,7 +53,8 @@ const css = `
 // #eebd43
 
 export default function Home() {
-  const [date, setDate] = React.useState(undefined)
+  const [date, setDate] = useState<Date | null>(null);
+  
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [products, setProduct] = useState([]);
   const [status, setStatus] = useState(false)
