@@ -77,8 +77,8 @@ export default function Home() {
   }, [products])
 
   const clearDate=()=>{
-    setSelectedService({ id: 0, price: 0 })
-    setProduct([])
+    setSelectedService({ id: null, price: null })
+    setProduct([{id: null, title:null}])
     setDate({ from: null, to: null });
 
   }
