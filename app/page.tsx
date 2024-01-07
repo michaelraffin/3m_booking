@@ -65,7 +65,9 @@ export default function Home() {
     price:0
   }]);
   const [status, setStatus] = useState(false)
-  const [selectedService, setSelectedService] = useState<{id:String | null; price: number}>({ id: null, price: 0 })
+  const [selectedService, setSelectedService] = useState<{
+    title: String | null;id:String | null; price: number
+}>({ title:null,id: null, price: 0 })
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
@@ -78,7 +80,7 @@ export default function Home() {
   }, [products])
 
   const clearDate=()=>{
-    setSelectedService({ id: null, price: 0 })
+    setSelectedService({title:null, id: null, price: 0 })
     setProduct([{id: null, title:null,price:0}])
     setDate({ from: null, to: null });
 
@@ -173,7 +175,7 @@ export default function Home() {
       
     }
   }
-  type YourItemType = {id: String | null; title: String | null,price:number}
+  type YourItemType = {id: String | null; title: String | null,price:number,subtitle:String | null}
   const renderServices = () => {
     try {
       let items = [<></>]
