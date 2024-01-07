@@ -76,7 +76,7 @@ export default function Home() {
   const clearDate=()=>{
     setSelectedService({ id: 0, price: 0 })
     setProduct([])
-    setDate(null)
+    setDate({ from: null, to: null });
 
   }
   const didTappSearch = () => {
@@ -155,19 +155,8 @@ export default function Home() {
   }
 
 
-  const handleDayClick: DayClickEventHandler = (day, modifiers) => {
-    const newSelectedDays = [...selectedDays];
-    if (modifiers.selected) {
-      const index = selectedDays.findIndex((selectedDay) =>
-        isSameDay(day, selectedDay)
-      );
-      newSelectedDays.splice(index, 1);
-    } else {
-      newSelectedDays.push(day);
-    }
-    setSelectedDays(newSelectedDays);
-  };
-  const didTappedService=(item)=>{
+  
+  const didTappedService=(item:any)=>{
     try {
       
       setSelectedService(item)
