@@ -59,13 +59,13 @@ export default function Home() {
   });
   
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
-  const [products, setProduct] = useState<[{id: String | null; title: String | null,price:String | null}]>([{
+  const [products, setProduct] = useState<[{id: String | null; title: String | null,price:Number | null}]>([{
     id:null,
     title:null,
-    price:null
+    price:0
   }]);
   const [status, setStatus] = useState(false)
-  const [selectedService, setSelectedService] = useState<{id:String | null; price: String | null}>({ id: null, price: null })
+  const [selectedService, setSelectedService] = useState<{id:String | null; price: Number | null}>({ id: null, price: 0 })
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
@@ -78,8 +78,8 @@ export default function Home() {
   }, [products])
 
   const clearDate=()=>{
-    setSelectedService({ id: null, price: null })
-    setProduct([{id: null, title:null,price:null}])
+    setSelectedService({ id: null, price: 0 })
+    setProduct([{id: null, title:null,price:0}])
     setDate({ from: null, to: null });
 
   }
