@@ -16,9 +16,12 @@ import { axios } from "@/Utils/axios"
 import { DateRange } from 'react-day-picker';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Checkbox } from "@/components/ui/checkbox"
-export default function Home() {
-  const [date, setDate] = useState<DateRange>({ from: new Date(), to: new Date() });
+import { useToast } from "@/components/ui/use-toast"
 
+export default function Home() {
+  const { toast } = useToast()
+  const [date, setDate] = useState<DateRange>({ from: new Date(), to: new Date() });
+  const [isEmpty, setIsEmpty] = useState(false)
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [products, setProduct] = useState<[{ id: String | null; title: String | null, price: number; subtitle: String | null }] | null>([{
     id: null,
@@ -33,7 +36,8 @@ export default function Home() {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
-
+  const emptyRef = useRef<HTMLDivElement>(null);
+  
   const clearDate = () => {
     setSelectedService({ title: null, id: null, price: 0 })
     setProduct([{ id: null, title: null, price: 0, subtitle: null }])
@@ -46,13 +50,14 @@ export default function Home() {
 
     try {
       setStatus(true)
+      setIsEmpty(false)
       fetchProduct().then(items => {
         setStatus(false)
         let results = items.results
-        let availableSelection = results[0].productPicker
 
-        if (availableSelection.items) {
-
+        if (results?.length >= 1) {
+          setIsEmpty(false)
+          let availableSelection = results?.[0].productPicker
 
 
           // if (availableSelection.lenght >= 1) {
@@ -70,6 +75,16 @@ export default function Home() {
           //   console.log('not found')
           //   setProduct(results)
           // }
+        }else {
+          setIsEmpty(true)
+          toast({
+            description: "Schedule is not available.",
+          })
+          setTimeout(() => {
+            if (emptyRef.current) {
+              emptyRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 500);
         }
 
 
@@ -84,11 +99,11 @@ export default function Home() {
 
   const displayFirstLastDate = (classDetails:String) => {
     try {
-      if (date != undefined) {
+      if (date.from != undefined) {
         return (<>
           <div className={`${classDetails}`}>
             <div><Badge variant="outline">{moment(date.from).format('LL')}</Badge></div>
-            <div><Badge variant="outline">{moment(date.to).format('LL')}</Badge></div>
+            {date.to != undefined ? <div><Badge variant="outline">{moment(date.to).format('LL')}</Badge></div> : null}
           </div>
         </>)
       }
@@ -233,6 +248,66 @@ export default function Home() {
       }
     } catch (error) {
       return null
+    }
+  }
+  const renderEmpty=()=>{
+    try {
+      if (isEmpty) {
+        return (
+          <div ref={emptyRef}  className='text-center'>
+            <img src="https://cdn.dribbble.com/users/183518/screenshots/2581188/media/ba6518c3a42da81603792166b8fe188f.png?resize=800x600&vertical=center"
+                width={'500'}
+                height={200}
+                className='rounded-lg ml-4 '
+              />
+              <h1 className='text-xs'>
+                Nothing is here, try other one.
+              </h1>
+          </div>
+        )
+      }
+   
+    } catch (error) {
+      
+    }
+  }
+  const renderCalendarPicker=()=>{
+    try {
+      return (  <div className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-60">
+      <div className="row-span-3 ...">
+        <style>{css}</style>
+        <Calendar
+          mode="range"
+          selected={date}
+          onDayTouchCancel={(e)=>console.log(e)}
+          onSelect={(e: any) => setDateUser(e)}
+          className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
+          modifiersClassNames={{
+            selected: 'my-selected',
+            today: 'my-today'
+          }}
+
+        />
+      </div>
+      <div className="col-span-2 ... lg:mt-0 mt-10 ">
+        <h2 className={`mb-10 text-2xl font-semibold `}>
+          What date works for you?
+        </h2>
+
+        <p className='text-xs text-gray-700'>Selected days: ({daysCounter()}) {displayFirstLastDate("flex flex-col gap-2 mt-4 ...")}</p>
+      </div>
+      <div className="row-span-2 col-span-2 ...">
+        <Button
+          onClick={() => clearDate()}
+          variant={"ghost"} className='rounded-full text-xs mr-2'> Clear</Button>
+        <Button
+          disabled={status}
+          onClick={() => didTappSearch()}
+          variant="outline" className=' rounded-full text-xs hover:shadow-lg bg-black text-white mt-10'>{status ? 'Searching...' : 'Search available slot'}</Button>
+      </div>
+    </div>)
+    } catch (error) {
+      
     }
   }
   const renderServicesComponent = () => {
@@ -499,7 +574,9 @@ export default function Home() {
   }
   // type userDateType = {from: Date; to: Date }
   const setDateUser = (date: DateRange) => {
-    setDate({ from: date.from, to: date.to })
+    if(date.from != undefined) {
+      setDate({ from: date.from, to: date.to })
+    }
   }
 
   return (
@@ -529,38 +606,8 @@ export default function Home() {
 
 
       </div>
-      <div className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-60">
-        <div className="row-span-3 ...">
-          <style>{css}</style>
-          <Calendar
-            mode="range"
-            selected={date}
-            onSelect={(e: any) => setDateUser(e)}
-            className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
-            modifiersClassNames={{
-              selected: 'my-selected',
-              today: 'my-today'
-            }}
-
-          />
-        </div>
-        <div className="col-span-2 ... lg:mt-0 mt-10 ">
-          <h2 className={`mb-10 text-2xl font-semibold `}>
-            What date works for you?
-          </h2>
-
-          <p className='text-xs text-gray-700'>Selected days: ({daysCounter()}) {displayFirstLastDate("flex flex-col gap-2 mt-4 ...")}</p>
-        </div>
-        <div className="row-span-2 col-span-2 ...">
-          <Button
-            onClick={() => clearDate()}
-            variant={"ghost"} className='rounded-full text-xs mr-2'> Clear</Button>
-          <Button
-            disabled={status}
-            onClick={() => didTappSearch()}
-            variant="outline" className=' rounded-full text-xs hover:shadow-lg bg-black text-white mt-10'>{status ? 'Searching...' : 'Search available slot'}</Button>
-        </div>
-      </div>
+      {renderCalendarPicker()}
+      {renderEmpty()}
       {renderServicesComponent()}
       {renderCartComponent()}
       <div className='mb-20' />
