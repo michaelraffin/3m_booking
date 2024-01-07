@@ -17,7 +17,9 @@ import { DateRange } from 'react-day-picker';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
-
+import Script from 'next/script'
+import Head from 'next/head'
+ 
 export default function Home() {
   const { toast } = useToast()
   const [date, setDate] = useState<DateRange>({ from: new Date(), to: new Date() });
@@ -580,7 +582,57 @@ export default function Home() {
   }
 
   return (
+    <>
+ <Head>
+<meta name="robots" content="nofollow"/>
+<meta name="googlebot" content="noindex"/>
+  <meta name="keywords" content="SmartDeskPh, Standing Desk in Ph ,Autonomous,
+     LED wall,
+     Video wall,
+     Digital signage,
+     LED display,
+     Rental screens,
+     Event technology,
+     Audiovisual solutions,
+     Large format displays,
+     Outdoor LED screen,
+     Indoor LED panel,
+     LED video display,
+     Stage backdrop,
+     Corporate events,
+     Concert visuals,
+     Trade show displays,
+     Multimedia rentals,
+     Display solutions,
+     LED screen rental,
+     Interactive displays,
+     Rental LED panels,
+     Iligan City,
+     Cagayan De Oro City
+     "/>
+    </Head>
+
+    <Script 
+      strategy="afterInteractive"
+      src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63"/>
+
+ <Script async src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63"/>
+<Script>
+ {` window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5DNHH2RH63');
+  `}
+</Script>
+<Head>
+        <title>3M  Visual - Booking </title>
+        <meta property="og:Booking" content="3M Visual - Booking" key="Booking" />
+    
+      </Head>
+    
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+     
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
        </div>
@@ -614,6 +666,7 @@ export default function Home() {
 
       {/* {CheckboxWithText()} */}
     </main>
+    </>
   )
 }
 
