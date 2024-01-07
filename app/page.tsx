@@ -59,13 +59,13 @@ export default function Home() {
   });
   
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
-  const [products, setProduct] = useState<[{id: String | null; title: String | null,price:Number | null}]>([{
+  const [products, setProduct] = useState<[{id: String | null; title: String | null,price:Number}]>([{
     id:null,
     title:null,
     price:0
   }]);
   const [status, setStatus] = useState(false)
-  const [selectedService, setSelectedService] = useState<{id:String | null; price: Number | null}>({ id: null, price: 0 })
+  const [selectedService, setSelectedService] = useState<{id:String | null; price: Number}>({ id: null, price: 0 })
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
