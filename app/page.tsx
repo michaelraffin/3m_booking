@@ -25,33 +25,7 @@ import {
 import moment from "moment"
 import { axios } from "@/Utils/axios"
 import { DateRange } from 'react-day-picker';
-const css = `
-
-  .my-selected:not([disabled]) { 
-    font-weight: bold; 
-    border-radius: 25px;
-    background-color:black;
-    
-    color: white;
-    border: 2px solid currentColor;
-  }
-  .my-selected:hover:not([disabled]) {
-    border-color: black;
-    background-color:#eebd43;
-    
-    color: white;
-    border-radius: 25px;
-  }
-  .my-today { 
-    font-weight: bold;
-    font-size: 140%; 
-    color: red;
-    border-radius: 25px;
-    
-  }
-  
-`;
-// #eebd43
+ 
 
 export default function Home() {
   const [date, setDate] = useState<DateRange>({from:new Date(),to: new Date()});
@@ -70,10 +44,6 @@ export default function Home() {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
-  
-
-  
-
   useEffect(() => {
 
   }, [products])
@@ -81,7 +51,7 @@ export default function Home() {
   const clearDate=()=>{
     setSelectedService({title:null, id: null, price: 0 })
     setProduct([{id: null, title:null,price:0,subtitle:null}])
-    setDate(null);
+    setDate({from:new Date(),to:new Date()});
 
   }
   const didTappSearch = () => {
@@ -239,7 +209,6 @@ export default function Home() {
                 Available Payment Option
               </h2>
               {AccordionComponent()}
-              
               
               <div className="row-span-2 col-span-2 ...">
               {/* <Image
@@ -573,8 +542,33 @@ variant={"ghost"} className='rounded-full text-xs mr-2'> Clear</Button>
     </DrawerFooter>
   </DrawerContent>
 </Drawer> */}
-      
       <div className='mb-20'/>
     </main>
   )
 }
+
+const css = `
+  .my-selected:not([disabled]) { 
+    font-weight: bold; 
+    border-radius: 25px;
+    background-color:black;
+    
+    color: white;
+    border: 2px solid currentColor;
+  }
+  .my-selected:hover:not([disabled]) {
+    border-color: black;
+    background-color:#eebd43;
+    
+    color: white;
+    border-radius: 25px;
+  }
+  .my-today { 
+    font-weight: bold;
+    font-size: 140%; 
+    color: red;
+    border-radius: 25px;
+    
+  }
+  
+`;
