@@ -137,9 +137,9 @@ export default function Home() {
       if (products?.length) {
 
         let items = [<></>]
-        products.map((item: YourItemType, _index: number) => {
+        products?.map((item: YourItemType, _index: number) => {
           let isActive = selectedService.id === item.id
-          if (items.price != 0) {
+          if (item?.price != 0) {
             items.push(
               <a href="javascript:void(0);" onClick={() => didTappedService(item)}>
                 <article className={`rounded-lg border ${isActive ? ' border-gray-300 bg-black p-6' : ' border-gray-300 bg-white p-6'} hover:shadow-lg`}>
@@ -199,7 +199,7 @@ export default function Home() {
 
             <div className="col-span-2 ... lg:mt-10 mt-20 ">
               <h2 className={`mb-10 text-2xl font-semibold `}>
-                Available Payment Option
+              Select Payment Method
               </h2>
               {AccordionComponent()}
               <div className="row-span-2 col-span-2 ...">
@@ -468,6 +468,17 @@ export default function Home() {
             />
              Additional 15% of the total cart.
             {/* Yes. It's animated by default, but you can disable it if you prefer. */}
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-4">
+          <AccordionTrigger >Cash</AccordionTrigger>
+           <AccordionContent className='text-xs'>
+            <img src="https://img.freepik.com/premium-vector/money-hand-cartoon-cash-payments-concept-businessman-hands-takes-exchange-money_221062-38.jpg"
+              width={'200'}
+              height={200}
+              className='hover:shadow-lg rounded-lg ml-4'
+            />
+           <p>When paying cash, full payment</p>  is required before <span className='font-bold'>{moment(date.from).format('LL')}</span>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
