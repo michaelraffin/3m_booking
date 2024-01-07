@@ -411,7 +411,7 @@ export default function Home() {
       console.log('error cart', error)
     }
   }
-
+  type UserDateType = { from: Date; to: Date };
   const AccordionComponent=()=> {
     return (
       <Accordion type="single" collapsible className="w-full">
@@ -471,7 +471,7 @@ export default function Home() {
     }
   }
   // type userDateType = {from: Date; to: Date }
-  const setDateUser=(date:DateRange)=>{ 
+  const setDateUser=(date:DateRange )=>{ 
     setDate({from:date.from,to:date.to})
   }
   
@@ -525,7 +525,7 @@ export default function Home() {
           <Calendar
             mode="range"
             selected={date}
-            onSelect={(e:DateRange)=>setDateUser(e)}
+            onSelect={(e: any)=>setDateUser(e)}
             className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
             modifiersClassNames={{
               selected: 'my-selected',
