@@ -134,49 +134,52 @@ export default function Home() {
   type YourItemType = { id: String | null; title: String | null, price: number, subtitle: String | null }
   const renderServices = () => {
     try {
-      let items = [<></>]
+      if (products?.length) {
 
-      products.map((item: YourItemType, _index: number) => {
-        let isActive = selectedService.id === item.id
-        if (items.price != 0) {
-          items.push(
-            <a href="javascript:void(0);" onClick={() => didTappedService(item)}>
-              <article className={`rounded-lg border ${isActive ? ' border-gray-300 bg-black p-6' : ' border-gray-300 bg-white p-6'} hover:shadow-lg`}>
-                <div>
-                  <p className={`text-sm ${isActive ? 'text-white' : 'text-black'}`}>Price</p>
-
-                  <p className={`text-2xl font-medium ${isActive ? 'text-white' : 'text-black'}`}>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(item.price)}<span className='text-xs'>/Day</span></p>
-                </div>
-
-                <div className="mt-1 flex gap-1 text-green-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                    />
-                  </svg>
-
-                  <p className="flex gap-2 text-xs">
-                    {/* <span className="font-medium"> 67.81% </span> */}
-
-                    <span className={`text-xs ${isActive ? 'text-white' : 'text-black'}`}> {item.subtitle} </span>
-                  </p>
-                </div>
-              </article>
-            </a>
-          )
-        }
-
-      })
-      return items
+        let items = [<></>]
+        products.map((item: YourItemType, _index: number) => {
+          let isActive = selectedService.id === item.id
+          if (items.price != 0) {
+            items.push(
+              <a href="javascript:void(0);" onClick={() => didTappedService(item)}>
+                <article className={`rounded-lg border ${isActive ? ' border-gray-300 bg-black p-6' : ' border-gray-300 bg-white p-6'} hover:shadow-lg`}>
+                  <div>
+                    <p className={`text-sm ${isActive ? 'text-white' : 'text-black'}`}>Price</p>
+  
+                    <p className={`text-2xl font-medium ${isActive ? 'text-white' : 'text-black'}`}>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(item.price)}<span className='text-xs'>/Day</span></p>
+                  </div>
+  
+                  <div className="mt-1 flex gap-1 text-green-400">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                      />
+                    </svg>
+  
+                    <p className="flex gap-2 text-xs">
+                      {/* <span className="font-medium"> 67.81% </span> */}
+  
+                      <span className={`text-xs ${isActive ? 'text-white' : 'text-black'}`}> {item.subtitle} </span>
+                    </p>
+                  </div>
+                </article>
+              </a>
+            )
+          }
+  
+        })
+        return items
+      }
+ 
     } catch (error) {
       console.log("error rendering", error)
     }
