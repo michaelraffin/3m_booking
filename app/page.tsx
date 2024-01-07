@@ -283,7 +283,7 @@ export default function Home() {
               disabled={status}
               onClick={() => setTimeout(() => {
                 if (scrollRef.current) {
-                  cartRef.current.scrollIntoView({ behavior: 'smooth' });
+                  cartRef?.current?.scrollIntoView({ behavior: 'smooth' });
                 }
               }, 500)}
               variant="outline" className=' rounded-full hover:shadow-lg bg-black text-white mt-10'>{status ? 'Searching...' : 'Continue'}</Button>
@@ -434,7 +434,7 @@ export default function Home() {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
-          <AccordionTrigger>Installment</AccordionTrigger>
+          <AccordionTrigger disabled={true} className='text-gray-200'>Installment</AccordionTrigger>
            <AccordionContent className='text-xs'>
             <img src="https://www.bworldonline.com/wp-content/uploads/2022/09/billease-logo.jpg"
               width={'200'}
@@ -460,7 +460,7 @@ export default function Home() {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3">
-          <AccordionTrigger>Credit Card/Debit</AccordionTrigger>
+          <AccordionTrigger disabled={true} className='text-gray-200'>Credit Card/Debit</AccordionTrigger>
            <AccordionContent className='text-xs'>
             <img src="https://i.ytimg.com/vi/i09C02151PI/maxresdefault.jpg"
               width={'200'}
