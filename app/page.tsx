@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -11,36 +11,25 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-
 import moment from "moment"
 import { axios } from "@/Utils/axios"
 import { DateRange } from 'react-day-picker';
- 
-
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Checkbox } from "@/components/ui/checkbox"
 export default function Home() {
-  const [date, setDate] = useState<DateRange>({from:new Date(),to: new Date()});
-  
+  const [date, setDate] = useState<DateRange>({ from: new Date(), to: new Date() });
+
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
-  const [products, setProduct] = useState<[{id: String | null; title: String | null,price:number;subtitle:String | null}]>([{
-    id:null,
-    title:null,
-    price:0,
-    subtitle:null
+  const [products, setProduct] = useState<[{ id: String | null; title: String | null, price: number; subtitle: String | null }] | null>([{
+    id: null,
+    title: null,
+    price: 0,
+    subtitle: null
   }]);
   const [status, setStatus] = useState(false)
   const [selectedService, setSelectedService] = useState<{
-    title: String | null;id:String | null; price: number
-}>({ title:null,id: null, price: 0 })
+    title: String | null; id: String | null; price: number
+  }>({ title: null, id: null, price: 0 })
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
@@ -48,12 +37,13 @@ export default function Home() {
 
   }, [products])
 
-  const clearDate=()=>{
-    setSelectedService({title:null, id: null, price: 0 })
-    setProduct([{id: null, title:null,price:0,subtitle:null}])
-    setDate({from:new Date(),to:new Date()});
+  const clearDate = () => {
+    setSelectedService({ title: null, id: null, price: 0 })
+    setProduct([{ id: null, title: null, price: 0, subtitle: null }])
+    setDate({ from: new Date(), to: new Date() });
 
   }
+
   const didTappSearch = () => {
 
 
@@ -63,7 +53,7 @@ export default function Home() {
         setStatus(false)
         let results = items.results
         let availableSelection = results[0].productPicker
-        
+
         if (availableSelection.items) {
 
 
@@ -76,30 +66,30 @@ export default function Home() {
               scrollRef.current.scrollIntoView({ behavior: 'smooth' });
             }
           }, 500);
-          
-          
- 
+
+
+
           // } else {
           //   console.log('not found')
           //   setProduct(results)
           // }
         }
-        
+
 
       })
 
-      
+
     } catch (error) {
       console.log('error in didTapped', error)
     }
 
   }
 
-  const displayFirstLastDate = () => {
+  const displayFirstLastDate = (classDetails:String) => {
     try {
       if (date != undefined) {
         return (<>
-          <div className="flex flex-col gap-2 mt-4 ...">
+          <div className={classDetails}>
             <div><Badge variant="outline">{moment(date.from).format('LL')}</Badge></div>
             <div><Badge variant="outline">{moment(date.to).format('LL')}</Badge></div>
           </div>
@@ -130,10 +120,10 @@ export default function Home() {
   }
 
 
-  
-  const didTappedService=(item:any)=>{
+
+  const didTappedService = (item: any) => {
     try {
-      
+
       setSelectedService(item)
       setTimeout(() => {
         if (cartRef.current) {
@@ -141,50 +131,53 @@ export default function Home() {
         }
       }, 500);
     } catch (error) {
-      
+
     }
   }
-  type YourItemType = {id: String | null; title: String | null,price:number,subtitle:String | null}
+  type YourItemType = { id: String | null; title: String | null, price: number, subtitle: String | null }
   const renderServices = () => {
     try {
       let items = [<></>]
 
-      products.map((item:YourItemType, _index: number) => {
+      products.map((item: YourItemType, _index: number) => {
         let isActive = selectedService.id === item.id
-        items.push(
-          <a href="javascript:void(0);" onClick={() => didTappedService(item)}>
-            <article className={`rounded-lg border ${isActive ? ' border-gray-300 bg-black p-6' : ' border-gray-300 bg-white p-6'} hover:shadow-lg`}>
-              <div>
-                <p className={`text-sm ${isActive ? 'text-white' : 'text-black'}`}>Price</p>
+        if (items.price != 0) {
+          items.push(
+            <a href="javascript:void(0);" onClick={() => didTappedService(item)}>
+              <article className={`rounded-lg border ${isActive ? ' border-gray-300 bg-black p-6' : ' border-gray-300 bg-white p-6'} hover:shadow-lg`}>
+                <div>
+                  <p className={`text-sm ${isActive ? 'text-white' : 'text-black'}`}>Price</p>
 
-                <p className={`text-2xl font-medium ${isActive ? 'text-white' : 'text-black'}`}>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(item.price)}<span className='text-xs'>/Day</span></p>
-              </div>
+                  <p className={`text-2xl font-medium ${isActive ? 'text-white' : 'text-black'}`}>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(item.price)}<span className='text-xs'>/Day</span></p>
+                </div>
 
-              <div className="mt-1 flex gap-1 text-green-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
+                <div className="mt-1 flex gap-1 text-green-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                    />
+                  </svg>
 
-                <p className="flex gap-2 text-xs">
-                  {/* <span className="font-medium"> 67.81% </span> */}
+                  <p className="flex gap-2 text-xs">
+                    {/* <span className="font-medium"> 67.81% </span> */}
 
-                  <span className={`text-xs ${isActive ? 'text-white' : 'text-black'}`}> {item.subtitle} </span>
-                </p>
-              </div>
-            </article>
-          </a>
-        )
+                    <span className={`text-xs ${isActive ? 'text-white' : 'text-black'}`}> {item.subtitle} </span>
+                  </p>
+                </div>
+              </article>
+            </a>
+          )
+        }
+
       })
       return items
     } catch (error) {
@@ -209,9 +202,8 @@ export default function Home() {
                 Available Payment Option
               </h2>
               {AccordionComponent()}
-              
               <div className="row-span-2 col-span-2 ...">
-              {/* <Image
+                {/* <Image
         src="/mop.jpg"
         alt="Vercel Logo"
         className="dark:invert"
@@ -220,13 +212,18 @@ export default function Home() {
         priority
       /> */}
 
-        {/* <h2 className={`mb-3 text-1xl font-semibold mt-10`}>
+                {/* <h2 className={`mb-3 text-1xl font-semibold mt-10`}>
                 Flexible Payment Option
               </h2>         */}
               </div>
-
             </div>
-
+       
+            {/* <Alert className='h-20 bg-[#f7f1e3]'>
+  <AlertTitle>Heads up!</AlertTitle>
+  <AlertDescription>
+    You can add components and dependencies to your app using the cli.
+  </AlertDescription>
+</Alert> */}
             <div className="row-span-3 ... mt-20 lg:mt-0">
               {renderCart()}
             </div>
@@ -239,12 +236,16 @@ export default function Home() {
     }
   }
   const renderServicesComponent = () => {
-    if (products.length) {
+    if (products[0].price != 0) {
       return <>
 
-
-        <div ref={scrollRef} className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-10 ">
+<div className='mt-20' ref={scrollRef}/>
+        <div  className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-10 ">
+        <h2 className={`mb-10 text-2xl font-semibold lg:hidden block `}>
+              Select your service
+            </h2>
           <div className="row-span-3 ...">
+            
             <img src="https://www.hdledisplay.com/wp-content/uploads/2020/08/small-pixel-pitch-led-wall-3.jpg"
               width={'80%%'}
               height={200}
@@ -263,28 +264,50 @@ export default function Home() {
           /> */}
           </div>
           <div className="col-span-2 ... lg:mt-0 mt-10 ">
-            <h2 className={`mb-10 text-2xl font-semibold `}>
+          <h2 className={`mb-10 text-2xl font-semibold lg:block  hidden `}>
               Select your service
             </h2>
-          {/* <p className='text-xs'>500x500mm</p> */}
-          <p className='text-xs'>number of days {daysCounter()}</p>
-            <div className="w-full ">
+            {/* <p className='text-xs'>500x500mm</p> */}
+            <p className='text-xs'>number of days {daysCounter()}</p>
+            <div  className="w-full ">
               <div className="w-full  grid lg:grid-cols-3 gap-4 m-2">
 
                 {renderServices()}
               </div></div>
           </div>
           <div className="row-span-2 col-span-2 ...">
-           
-          <h1>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(daysCounter() * selectedService.price )}</h1>
+
+            <h1>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(daysCounter() * selectedService.price)}</h1>
             <Button
               disabled={status}
-              onClick={() => didTappSearch()}
+              onClick={() => setTimeout(() => {
+                if (scrollRef.current) {
+                  cartRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
+              }, 500)}
               variant="outline" className=' rounded-full hover:shadow-lg bg-black text-white mt-10'>{status ? 'Searching...' : 'Continue'}</Button>
           </div>
         </div>
       </>
     }
+  }
+  function CheckboxWithText() {
+    return (
+      <div className="items-top flex space-x-2">
+        <Checkbox id="terms1" />
+        <div className="grid gap-1.5 leading-none">
+          <label
+            htmlFor="terms1"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Accept terms and conditions
+          </label>
+          <p className="text-sm text-muted-foreground">
+            You agree to our Terms of Service and Privacy Policy.
+          </p>
+        </div>
+      </div>
+    )
   }
   const renderCart = () => {
     try {
@@ -295,10 +318,16 @@ export default function Home() {
             <li className="flex items-start justify-between">
               <h3>{selectedService.title}
                 <span className="text-sm dark:text-violet-400"> X {daysCounter()}</span>
+                <p>
+                {/* <span className="text-sm dark:text-violet-400">{}</span> */}
+                {displayFirstLastDate("")}
+              </p>
+              
               </h3>
+              
               <div className="text-right">
                 <span className="block">{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(daysCounter() * selectedService.price)}</span>
-                
+
               </div>
             </li>
             {/* <li className="flex items-start justify-between">
@@ -363,14 +392,14 @@ export default function Home() {
             <div className="space-y-6">
               <div className="flex justify-between">
                 <span>Total</span>
-                
+
                 <span className="font-semibold">{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(daysCounter() * selectedService.price)}</span>
               </div>
               {/* <Button className='rounded-full bg-black text-xs'>
         Book now
       </Button> */}
 
-     
+
               {/* <button type="button" className="w-full py-2 font-semibold border rounded dark:bg-violet-400 dark:text-gray-900 dark:border-violet-400">Go to checkout</button> */}
             </div>
           </div>
@@ -381,58 +410,75 @@ export default function Home() {
     }
   }
   type UserDateType = { from: Date; to: Date };
-  const AccordionComponent=()=> {
+  const AccordionComponent = () => {
     return (
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger>E-Wallet</AccordionTrigger>
-          <AccordionContent>
-            {/* Yes. It adheres to the WAI-ARIA design pattern. */}
+          <AccordionContent className='text-xs'>
             <img src="https://pbs.twimg.com/media/FHba1s4aQAQnVy0.jpg"
-                width={'200'}
-                height={200}
-                className='hover:shadow-lg rounded-lg ml-4'
-              />
+              width={'200'}
+              height={200}
+              className='hover:shadow-lg rounded-lg ml-4 mb-2'
+            />
+<img src="https://www.bworldonline.com/wp-content/uploads/2022/05/Maya-Bank-logo.jpg"
+              width={'200'}
+              height={200}
+              className='hover:shadow-lg rounded-lg ml-4 mb-2'
+            />
+
+
+             Additional 5% of the total cart.
 
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
           <AccordionTrigger>Installment</AccordionTrigger>
-          <AccordionContent>
-          <img src="https://pbs.twimg.com/media/FHba1s4aQAQnVy0.jpg"
-                width={'200'}
-                height={200}
-                className='hover:shadow-lg rounded-lg ml-4'
-              />
-               <img src="https://pbs.twimg.com/media/FHba1s4aQAQnVy0.jpg"
-                width={'200'}
-                height={200}
-                className='hover:shadow-lg rounded-lg ml-4'
-              />
+           <AccordionContent className='text-xs'>
+            <img src="https://www.bworldonline.com/wp-content/uploads/2022/09/billease-logo.jpg"
+              width={'200'}
+              height={200}
+              className='hover:shadow-lg rounded-lg ml-4'
+            />
+                     <img src="https://assets-global.website-files.com/64624bb008de2f11dbf1f3a1/6465f9263eb94044a3743277_HitPay_Blue-min.svg"
+              width={'200'}
+              height={200}
+              className='hover:shadow-lg rounded-lg ml-4'
+            />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdYezi5IEhWjNsRSEP9EdEDt2U9sN3bei49Tk_LRzBukQj3fIjjghemVMPrjjbQMtsiOo&usqp=CAU"
+              width={'200'}
+              height={100}
+              className='hover:shadow-lg rounded-lg ml-4'
+            />
+
+             Additional 15% of the total cart.
+   
+            
             {/* Yes. It comes with default styles that matches the other
             components&apos; aesthetic. */}
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3">
           <AccordionTrigger>Credit Card/Debit</AccordionTrigger>
-          <AccordionContent>
-          <img src="https://pbs.twimg.com/media/FHba1s4aQAQnVy0.jpg"
-                width={'200'}
-                height={200}
-                className='hover:shadow-lg rounded-lg ml-4'
-              />
+           <AccordionContent className='text-xs'>
+            <img src="https://i.ytimg.com/vi/i09C02151PI/maxresdefault.jpg"
+              width={'200'}
+              height={200}
+              className='hover:shadow-lg rounded-lg ml-4'
+            />
+             Additional 15% of the total cart.
             {/* Yes. It's animated by default, but you can disable it if you prefer. */}
           </AccordionContent>
         </AccordionItem>
       </Accordion>
     )
   }
-  const daysCounter =()=>{
+  const daysCounter = () => {
     try {
-      let value = moment(date.to).diff(date.from,'days') + 1
+      let value = moment(date.to).diff(date.from, 'days') + 1
       if (value >= 1) {
-        return  value
-      }else {
+        return value
+      } else {
         return 1
       }
     } catch (error) {
@@ -440,12 +486,12 @@ export default function Home() {
     }
   }
   // type userDateType = {from: Date; to: Date }
-  const setDateUser=(date:DateRange )=>{ 
-    setDate({from:date.from,to:date.to})
+  const setDateUser = (date: DateRange) => {
+    setDate({ from: date.from, to: date.to })
   }
-  
+
   return (
-    <main   className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
 
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
@@ -494,7 +540,7 @@ export default function Home() {
           <Calendar
             mode="range"
             selected={date}
-            onSelect={(e: any)=>setDateUser(e)}
+            onSelect={(e: any) => setDateUser(e)}
             className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
             modifiersClassNames={{
               selected: 'my-selected',
@@ -508,12 +554,12 @@ export default function Home() {
             What date works for you?
           </h2>
 
-          <p className='text-xs text-gray-700'>Selected days: ({daysCounter()}) {displayFirstLastDate()}</p>
+          <p className='text-xs text-gray-700'>Selected days: ({daysCounter()}) {displayFirstLastDate("flex flex-col gap-2 mt-4 ...")}</p>
         </div>
         <div className="row-span-2 col-span-2 ...">
-<Button 
-onClick={()=>clearDate()}
-variant={"ghost"} className='rounded-full text-xs mr-2'> Clear</Button>
+          <Button
+            onClick={() => clearDate()}
+            variant={"ghost"} className='rounded-full text-xs mr-2'> Clear</Button>
           <Button
             disabled={status}
             onClick={() => didTappSearch()}
@@ -521,28 +567,10 @@ variant={"ghost"} className='rounded-full text-xs mr-2'> Clear</Button>
         </div>
       </div>
       {renderServicesComponent()}
-
-
       {renderCartComponent()}
-      {/* <Drawer>
-  <DrawerTrigger className=''>
-  Submit booking</DrawerTrigger>
-  <DrawerContent>
-    <DrawerHeader>
-      <DrawerTitle>Are you sure absolutely sure?</DrawerTitle>
-      <DrawerDescription>This action cannot be undone.</DrawerDescription>
-      <input placeholder='Full name'/>
-      <input placeholder='Mobile Number'/>
-    </DrawerHeader>
-    <DrawerFooter>
-      <Button>Submit</Button>
-      <DrawerClose>
-        <Button variant="outline">Cancel</Button>
-      </DrawerClose>
-    </DrawerFooter>
-  </DrawerContent>
-</Drawer> */}
-      <div className='mb-20'/>
+      <div className='mb-20' />
+
+      {/* {CheckboxWithText()} */}
     </main>
   )
 }
