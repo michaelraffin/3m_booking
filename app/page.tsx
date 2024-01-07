@@ -53,7 +53,10 @@ const css = `
 // #eebd43
 
 export default function Home() {
-  const [date, setDate] = useState<Date | null>(null);
+  const [date, setDate] = useState<{ from: Date | null; to: Date | null }>({
+    from: null,
+    to: null
+  });
   
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [products, setProduct] = useState<String[]>([]);
