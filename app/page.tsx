@@ -286,18 +286,30 @@ export default function Home() {
       return (  <div className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-60">
       <div className="row-span-3 ...">
         <style>{css}</style>
-        <Calendar
-          mode={eventType === "Single" ?"single" :"range"}
-          selected={ eventType === "Single" ?  singleDate:  date}
+        {eventType === "Single" ?  <Calendar
+          mode={"single"}
+          selected={   singleDate}
           onDayTouchCancel={(e)=>console.log(e)}
-          onSelect={(e: any) =>  eventType === "Single" ? setDateUserSingle(e): setDateUser(e)}
+          onSelect={(e: any) =>  setDateUserSingle(e)}
           className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
           modifiersClassNames={{
             selected: 'my-selected',
             today: 'my-today'
           }}
 
-        />
+        /> : <Calendar
+        mode={"range"}
+        selected={ date}
+        onDayTouchCancel={(e)=>console.log(e)}
+        onSelect={(e: any) => setDateUser(e)}
+        className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
+        modifiersClassNames={{
+          selected: 'my-selected',
+          today: 'my-today'
+        }}
+
+      /> }
+       
       </div>
       <div className="col-span-2 ... lg:mt-0 mt-10 ">
    
