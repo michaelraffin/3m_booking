@@ -236,7 +236,8 @@ export default function Home() {
     }
   }
   const renderServicesComponent = () => {
-    if (products[0].price != 0) {
+      
+    if (products?.[0].price != 0) {
       return <>
 
 <div className='mt-20' ref={scrollRef}/>
