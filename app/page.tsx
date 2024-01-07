@@ -613,11 +613,14 @@ export default function Home() {
     </Head>
 
     <Script 
+    id='googleID'
       strategy="afterInteractive"
       src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63"/>
 
- <Script async src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63"/>
-<Script>
+ <Script
+ id='googleID2'
+ async src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63"/>
+<Script id='googleID3'>
  {` window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
