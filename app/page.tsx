@@ -24,6 +24,7 @@ import {
 
 import moment from "moment"
 import { axios } from "@/Utils/axios"
+import { DateRange } from 'react-day-picker';
 const css = `
 
   .my-selected:not([disabled]) { 
@@ -53,10 +54,7 @@ const css = `
 // #eebd43
 
 export default function Home() {
-  const [date, setDate] = useState<{ from: Date | null; to: Date | null }>({
-    from: null,
-    to: null
-  });
+  const [date, setDate] = useState<DateRange>({from:new Date(),to: new Date()});
   
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [products, setProduct] = useState<[{id: String | null; title: String | null,price:number;subtitle:String | null}]>([{
@@ -83,7 +81,7 @@ export default function Home() {
   const clearDate=()=>{
     setSelectedService({title:null, id: null, price: 0 })
     setProduct([{id: null, title:null,price:0,subtitle:null}])
-    setDate({ from: null, to: null });
+    setDate(null);
 
   }
   const didTappSearch = () => {
@@ -472,6 +470,10 @@ export default function Home() {
       return 0
     }
   }
+  // type userDateType = {from: Date; to: Date }
+  const setDateUser=(date:DateRange)=>{ 
+    setDate({from:date.from,to:date.to})
+  }
   
   return (
     <main   className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -517,26 +519,13 @@ export default function Home() {
 
 
       </div>
-
-      {/* <Image
-        src="/mop.jpg"
-        alt="Vercel Logo"
-        className="dark:invert"
-        width={250}
-        height={120}
-        priority
-      /> */}
-
-
       <div className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-60">
         <div className="row-span-3 ...">
           <style>{css}</style>
           <Calendar
             mode="range"
-            // min={2}
-            // max={6}
             selected={date}
-            onSelect={setDate}
+            onSelect={(e:DateRange)=>setDateUser(e)}
             className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
             modifiersClassNames={{
               selected: 'my-selected',
