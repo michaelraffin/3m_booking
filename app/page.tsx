@@ -59,9 +59,12 @@ export default function Home() {
   });
   
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
-  const [products, setProduct] = useState<String[]>([]);
+  const [products, setProduct] = useState<[{id: String | null; title: String | null}]>([{
+    id:null,
+    title:null
+  }]);
   const [status, setStatus] = useState(false)
-  const [selectedService, setSelectedService] = useState({ id: 0, price: 0 })
+  const [selectedService, setSelectedService] = useState<{id:String | null; price: String | null}>({ id: null, price: null })
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
