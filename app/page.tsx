@@ -59,10 +59,11 @@ export default function Home() {
   });
   
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
-  const [products, setProduct] = useState<[{id: String | null; title: String | null,price:number}]>([{
+  const [products, setProduct] = useState<[{id: String | null; title: String | null,price:number;subtitle:String | null}]>([{
     id:null,
     title:null,
-    price:0
+    price:0,
+    subtitle:null
   }]);
   const [status, setStatus] = useState(false)
   const [selectedService, setSelectedService] = useState<{
@@ -81,7 +82,7 @@ export default function Home() {
 
   const clearDate=()=>{
     setSelectedService({title:null, id: null, price: 0 })
-    setProduct([{id: null, title:null,price:0}])
+    setProduct([{id: null, title:null,price:0,subtitle:null}])
     setDate({ from: null, to: null });
 
   }
