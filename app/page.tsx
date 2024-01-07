@@ -106,15 +106,21 @@ export default function Home() {
 
   const displayFirstLastDate = (classDetails:String) => {
     try {
-      if (date.from != undefined) {
+      if (date.from != undefined && eventType === "Multiple") {
         return (<>
           <div className={`${classDetails}`}>
-            <input className='rounded-md font-md w-40' disabled={true} value={`From : ${moment(date.from).format('LL')}`}/>
-            <input className='rounded-md font-md w-40' disabled={true} value={`To : ${moment(date.to).format('LL')}`}/>
+            <input className='rounded-md font-md w-40 text-xs ' disabled={true} value={`From : ${moment(date.from).format('LL')}`}/>
+            <input className='rounded-md font-md w-40 text-xs ' disabled={true} value={`To : ${moment(date.to).format('LL')}`}/>
             {/* <div><Badge variant="outline">{moment(date.from).format('LL')}</Badge></div> */}
             {/* {date.to != undefined ? <div><Badge variant="outline">{moment(date.to).format('LL')}</Badge></div> : null} */}
           </div>
         </>)
+      } else {
+        return (
+          <div className={`${classDetails}`}>
+            <input className='w-48   text-xs mt-2' disabled={true} value={`Event date : ${moment(date.from).format('LL')}`}/>
+          </div>
+        )
       }
 
 
@@ -700,7 +706,7 @@ export default function Home() {
       </div>
       <div>
         <h2 className={`mb-3 text-2xl font-semibold mt-10`}>
-          Your LED Solution!
+          Your LED wall Solution!
         </h2>
         {/* <h2 className={`mb-3 text-1xl font-semibold mt-10`}>
           Flexible Payment Option
