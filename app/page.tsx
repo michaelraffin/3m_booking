@@ -19,11 +19,16 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
 import Script from 'next/script'
 import Head from 'next/head'
- 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
+
 export default function Home() {
   const { toast } = useToast()
   const [date, setDate] = useState<DateRange>({ from: new Date(), to: new Date() });
+  const [singleDate, setSingleDate] = useState<Date>(new Date());
   const [isEmpty, setIsEmpty] = useState(false)
+  const [eventType, selectedEventType] = useState<String>("Single")
+  
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [products, setProduct] = useState<[{ id: String | null; title: String | null, price: number; subtitle: String | null }] | null>([{
     id: null,
@@ -104,8 +109,10 @@ export default function Home() {
       if (date.from != undefined) {
         return (<>
           <div className={`${classDetails}`}>
-            <div><Badge variant="outline">{moment(date.from).format('LL')}</Badge></div>
-            {date.to != undefined ? <div><Badge variant="outline">{moment(date.to).format('LL')}</Badge></div> : null}
+            <input className='rounded-md font-md w-40' disabled={true} value={`From : ${moment(date.from).format('LL')}`}/>
+            <input className='rounded-md font-md w-40' disabled={true} value={`To : ${moment(date.to).format('LL')}`}/>
+            {/* <div><Badge variant="outline">{moment(date.from).format('LL')}</Badge></div> */}
+            {/* {date.to != undefined ? <div><Badge variant="outline">{moment(date.to).format('LL')}</Badge></div> : null} */}
           </div>
         </>)
       }
@@ -273,16 +280,17 @@ export default function Home() {
       
     }
   }
+  
   const renderCalendarPicker=()=>{
     try {
       return (  <div className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-60">
       <div className="row-span-3 ...">
         <style>{css}</style>
         <Calendar
-          mode="range"
-          selected={date}
+          mode={eventType === "Single" ?"single" :"range"}
+          selected={ eventType === "Single" ?  singleDate:  date}
           onDayTouchCancel={(e)=>console.log(e)}
-          onSelect={(e: any) => setDateUser(e)}
+          onSelect={(e: any) =>  eventType === "Single" ? setDateUserSingle(e): setDateUser(e)}
           className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
           modifiersClassNames={{
             selected: 'my-selected',
@@ -292,12 +300,28 @@ export default function Home() {
         />
       </div>
       <div className="col-span-2 ... lg:mt-0 mt-10 ">
+   
         <h2 className={`mb-10 text-2xl font-semibold `}>
           What date works for you?
         </h2>
+  <Tabs defaultValue="Single" className="w-[400px] rounded-full " onValueChange={(e)=>selectedEventType(e)}>
+  <TabsList className=" rounded-full">
+    <TabsTrigger value="Single"className=" rounded-full text-xs">One Day Event</TabsTrigger>
+    <TabsTrigger value="Multiple"className=" rounded-full text-xs">Multiple Day Event</TabsTrigger>
+  </TabsList>
 
-        <p className='text-xs text-gray-700'>Selected days: ({daysCounter()}) {displayFirstLastDate("flex flex-col gap-2 mt-4 ...")}</p>
+  <TabsContent value="Single" className=''>
+  <input className='w-48   text-xs mt-10' disabled={true} value={`Event date : ${moment(date.from).format('LL')}`}/>
+
+  </TabsContent>
+  <TabsContent value="Multiple">
+  <p className='text-xs text-gray-700 mt-10'>Selected days: ({daysCounter()}) {displayFirstLastDate("flex flex-col gap-2 mt-4 ...")}</p>
+
+  </TabsContent>
+</Tabs>
+        {/* <p className='text-xs text-gray-700'>Selected days: ({daysCounter()}) {displayFirstLastDate("flex flex-col gap-2 mt-4 ...")}</p> */}
       </div>
+      
       <div className="row-span-2 col-span-2 ...">
         <Button
           onClick={() => clearDate()}
@@ -306,7 +330,10 @@ export default function Home() {
           disabled={status}
           onClick={() => didTappSearch()}
           variant="outline" className=' rounded-full text-xs hover:shadow-lg bg-black text-white mt-10'>{status ? 'Searching...' : 'Search available slot'}</Button>
+
+          {/* <div className='w-full bg-gray-500 h-[0.5px] mb-2 mt-2'/> */}
       </div>
+      
     </div>)
     } catch (error) {
       
@@ -364,7 +391,9 @@ export default function Home() {
                 }
               }, 500)}
               variant="outline" className=' rounded-full hover:shadow-lg bg-black text-white mt-10'>{status ? 'Searching...' : 'Continue'}</Button>
+              
           </div>
+          {/* <div className='w-full bg-gray-500 h-[0.5px] mb-2 mt-2'/> */}
         </div>
       </>
     }
@@ -580,7 +609,14 @@ export default function Home() {
       setDate({ from: date.from, to: date.to })
     }
   }
-
+  const setDateUserSingle = (date: Date) => {
+    console.log(date)
+    setSingleDate(date)
+    // setDate({from:date,to:new Date()})
+    // if(date.from != undefined) {
+    //   setDate({ from: date.from, to: date.to })
+    // }
+  }
   return (
     <>
  <Head>
