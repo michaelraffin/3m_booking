@@ -173,12 +173,12 @@ export default function Home() {
       
     }
   }
-  type YourItemType = [{id: String | null; title: String | null,price:number}]
+  type YourItemType = {id: String | null; title: String | null,price:number}
   const renderServices = () => {
     try {
       let items = [<></>]
 
-      products.map((item :YourItemType) => {
+      products.map((item:YourItemType, _index: number) => {
         let isActive = selectedService.id === item.id
         items.push(
           <a href="javascript:void(0);" onClick={() => didTappedService(item)}>
