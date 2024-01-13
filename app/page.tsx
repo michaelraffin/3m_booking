@@ -12,7 +12,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import moment from "moment"
-import { axios } from "@/Utils/axios"
+import { axios ,productStats} from "@/Utils/axios"
 import { DateRange } from 'react-day-picker';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -65,6 +65,7 @@ export default function Home() {
     try {
       setStatus(true)
       setIsEmpty(false)
+      
       fetchProduct().then(items => {
         setStatus(false)
         let results = items.results
@@ -140,9 +141,10 @@ export default function Home() {
 
   async function fetchProduct() {
     try {
+      let selectedDated = moment( eventType === "Single"  ?  singleDate :  date.from).format('YYYY-MM-DD') 
       const data = {
         id: "Visual", queryType: "filter", storeOwner: "60b1c9a9a001ef1e463d52c2",
-        "isAPI": true, "showLimit": true, "number": 8, "deliveryDate": moment(date.from).format('YYYY-MM-DD')
+        "isAPI": true, "showLimit": true, "number": 8, "deliveryDate": selectedDated
       }
 
 
@@ -157,7 +159,7 @@ export default function Home() {
 
   const didTappedService = (item: any) => {
     try {
-
+      recordProductStats('Selected service',item)
       setSelectedService(item)
       setTimeout(() => {
         if (cartRef.current) {
@@ -283,7 +285,7 @@ export default function Home() {
                 className='rounded-lg ml-4 '
               />
               <h1 className='text-xs'>
-                Nothing is here, try other one.
+                Sorry we're not available on the selected date, try other one.
               </h1>
           </div>
         )
@@ -633,11 +635,25 @@ export default function Home() {
   const setDateUser = (date: DateRange) => {
     if(date.from != undefined) {
       setDate({ from: date.from, to: date.to })
+      recordProductStats('Multple Date ',`Date: ${date.from} + ${date.to} , daysNumber: ${daysCounter()}`)
+    }
+  }
+  async function recordProductStats(e:any,date: any) {
+    try {
+        
+        const data = {storeOwner:"3MVisual",cType:'3m Visual Booking Page',cName:"website","data":date,"date":new Date(),action:e}
+        const response = await productStats.put('/Items', data) 
+        return  response
+        
+    } catch (error) {
+      console.log('error recordProductStats',error)
     }
   }
   const setDateUserSingle = (date: Date) => {
     console.log(date)
     setSingleDate(date)
+    productStats('')
+    recordProductStats("Single Date ",date)
     // setDate({from:date,to:new Date()})
     // if(date.from != undefined) {
     //   setDate({ from: date.from, to: date.to })
@@ -727,10 +743,8 @@ export default function Home() {
       Continue with Google
             </Button> */}
       </div>
-        
       {renderCalendarPicker()}
-      {renderEmpty()}
-      {renderServicesComponent()}
+      {status ? null : isEmpty ? renderEmpty() : renderServicesComponent()}
       {renderCartComponent()}
       <div className='mb-20' />
 

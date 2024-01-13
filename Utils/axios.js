@@ -1,7 +1,8 @@
 
 import Axios from 'axios'; 
 export const url = "https://www.smestoreph.com/" //process.env.stagingEndpoint
-export const urlFirebase =  process.env.urlFirebase
+export const urlFirebase =  "https://different-goat-long-underwear.cyclic.cloud"
+//process.env.urlFirebase
 export const urlSupBase =  process.env.urlSupaBase
 export const mapBoxUrl = process.env.mapBoxEndpoint
  
