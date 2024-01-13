@@ -2,10 +2,8 @@
 import Axios from 'axios'; 
 export const url = "https://www.smestoreph.com/" //process.env.stagingEndpoint
 export const urlFirebase =  "https://different-goat-long-underwear.cyclic.cloud"
-//process.env.urlFirebase
 export const urlSupBase =  process.env.urlSupaBase
 export const mapBoxUrl = process.env.mapBoxEndpoint
- 
 export const axiosV2Local = (token,id)=>  Axios.create({
     baseURL:'http://192.168.1.148:9091',
     timeOut:3000,

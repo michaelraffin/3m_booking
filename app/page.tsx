@@ -652,7 +652,7 @@ export default function Home() {
   const setDateUserSingle = (date: Date) => {
     console.log(date)
     setSingleDate(date)
-    productStats('')
+    
     recordProductStats("Single Date ",date)
     // setDate({from:date,to:new Date()})
     // if(date.from != undefined) {
