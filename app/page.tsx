@@ -19,6 +19,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
 import Script from 'next/script'
 import Head from 'next/head'
+import {signinAuth} from '../Utils/login_service'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 
@@ -52,6 +53,12 @@ export default function Home() {
 
   }
 
+  const  signinAccount =()=>{
+    signinAuth().then(response=>{
+      console.log(response)
+          })
+  }
+  
   const didTappSearch = () => {
 
 
@@ -317,6 +324,7 @@ export default function Home() {
       /> }
        
       </div>
+      
       <div className="col-span-2 ... lg:mt-0 mt-10 ">
    
         <h2 className={`mb-10 text-2xl font-semibold `}>
@@ -391,7 +399,7 @@ export default function Home() {
               Select your service
             </h2>
             {/* <p className='text-xs'>500x500mm</p> */}
-            <p className='text-xs'>number of days {daysCounter()}</p>
+            <p className='text-xs'>Number of days {daysCounter()}</p>
             <div  className="w-full ">
               <div className="w-full  grid lg:grid-cols-3 gap-4 m-2">
 
@@ -541,12 +549,12 @@ export default function Home() {
         <AccordionItem value="item-1">
           <AccordionTrigger>E-Wallet</AccordionTrigger>
           <AccordionContent className='text-xs'>
-            <img src="https://pbs.twimg.com/media/FHba1s4aQAQnVy0.jpg"
+            <img src="https://localflowershop.sgp1.digitaloceanspaces.com/product/1705113012149-scanPay.png"
               width={'200'}
               height={200}
               className='hover:shadow-lg rounded-lg ml-4 mb-2'
             />
-<img src="https://www.bworldonline.com/wp-content/uploads/2022/05/Maya-Bank-logo.jpg"
+<img src="https://localflowershop.sgp1.digitaloceanspaces.com/product/1705113100668-PYMY%20LOOKEE%20%281%29.png"
               width={'200'}
               height={200}
               className='hover:shadow-lg rounded-lg ml-4 mb-2'
@@ -711,11 +719,16 @@ export default function Home() {
         {/* <h2 className={`mb-3 text-1xl font-semibold mt-10`}>
           Flexible Payment Option
         </h2> */}
+<div className='mt-20'/>
 
-
-
+ <Button className='bg-white text-black hover:border  hover:border-blue-500 hover:bg-gray-100 rounded-full'  onClick={signinAccount}>
+        <img src="https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png" className="mr-2 h-4 w-4" />
+      {/* <Mail className="mr-2 h-4 w-4" />  */}
+      Continue with Google
+            </Button>
       </div>
-      {renderCalendarPicker()}
+        
+      {/* {renderCalendarPicker()} */}
       {renderEmpty()}
       {renderServicesComponent()}
       {renderCartComponent()}
