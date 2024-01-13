@@ -58,7 +58,7 @@ export default function Home() {
       console.log(response)
           })
   }
-  
+  let titlePage = "3M  Visual - Booking "
   const didTappSearch = () => {
 
 
@@ -286,7 +286,7 @@ export default function Home() {
                 className='rounded-lg ml-4 '
               />
               <h1 className='text-xs'>
-                Sorry we are not available on the selected date, try other one.
+                Sorry! We are not available on the chosen date, try other one.
               </h1>
           </div>
         )
@@ -690,14 +690,15 @@ export default function Home() {
      Cagayan De Oro City
      "/>
     </Head>
-
+    <title>{titlePage}</title>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <Script 
-    id='googleID'
+    id='google-analytics'
       strategy="afterInteractive"
       src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63"/>
 
  <Script
- id='googleID2'
+ id='google-analytics'
  async src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63"/>
 <Script id='googleID3'>
  {` window.dataLayer = window.dataLayer || [];
@@ -708,7 +709,7 @@ export default function Home() {
   `}
 </Script>
 <Head>
-        <title>3M  Visual - Booking </title>
+        <title> </title>
         <meta property="og:Booking" content="3M Visual - Booking" key="Booking" />
     
       </Head>
