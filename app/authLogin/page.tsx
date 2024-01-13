@@ -23,7 +23,7 @@ export default function Auth() {
       console.log('welcome to auth')
 
         getSession().then((e)=>{
-          console.log(e.data.user.id)
+          console.log(e)
           localStorage.setItem('uuid', `${e.data.user.id}`);
                 
       getProfile().then((e) =>{
@@ -32,9 +32,9 @@ export default function Auth() {
 
 
         if(user.user_details === null){
-  router.push('/onboard');
+  router.push('/');
         }else {
-  router.push('/dashboard');
+  router.push('/');
         }
         console.log(e.data)
       })
