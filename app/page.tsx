@@ -755,16 +755,16 @@ export default function Home() {
           Flexible Payment Option
         </h2> */}
           <div className='mt-20' />
-          <div>
+     
+        </div>
+        {checkAccount() != null ? renderCalendarPicker() :      <div>
             <div><p className='text-xs mb-4 ml-10'>To view the price</p> </div>
             <Button className='bg-white text-black hover:border  hover:border-blue-500 hover:bg-gray-100 rounded-full' onClick={signinAccount}>
               <img src="https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png" className="mr-2 h-4 w-4" />
 
               Continue with Google
             </Button>
-          </div>
-        </div>
-        {checkAccount() != null ? renderCalendarPicker() : null}
+          </div>}
         {status ? <></> : isEmpty ? renderEmpty() : renderServicesComponent()}
         {renderCartComponent()}
         <div className='mb-20' />
