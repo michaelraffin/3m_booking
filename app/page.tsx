@@ -12,14 +12,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import moment from "moment"
-import { axios ,productStats} from "@/Utils/axios"
+import { axios, productStats } from "@/Utils/axios"
 import { DateRange } from 'react-day-picker';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
 import Script from 'next/script'
 import Head from 'next/head'
-import {signinAuth} from '../Utils/login_service'
+import { signinAuth } from '../Utils/login_service'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 
@@ -29,7 +29,7 @@ export default function Home() {
   const [singleDate, setSingleDate] = useState<Date>(new Date());
   const [isEmpty, setIsEmpty] = useState(false)
   const [eventType, selectedEventType] = useState<String>("Single")
-  
+
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [products, setProduct] = useState<[{ id: String | null; title: String | null, price: number; subtitle: String | null }] | null>([{
     id: null,
@@ -45,7 +45,7 @@ export default function Home() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
   const emptyRef = useRef<HTMLDivElement>(null);
-  
+
   const clearDate = () => {
     setSelectedService({ title: null, id: null, price: 0 })
     setProduct([{ id: null, title: null, price: 0, subtitle: null }])
@@ -53,10 +53,10 @@ export default function Home() {
 
   }
 
-  const  signinAccount =()=>{
-    signinAuth().then(response=>{
-      console.log(response)
-          })
+  const signinAccount = () => {
+    signinAuth().then(response => {
+      storePayload(response)
+    })
   }
   let titlePage = "3M  Visual - Booking "
   const didTappSearch = () => {
@@ -65,7 +65,7 @@ export default function Home() {
     try {
       setStatus(true)
       setIsEmpty(false)
-      
+
       fetchProduct().then(items => {
         setStatus(false)
         let results = items.results
@@ -90,7 +90,7 @@ export default function Home() {
           //   console.log('not found')
           //   setProduct(results)
           // }
-        }else {
+        } else {
           setIsEmpty(true)
           toast({
             description: "Schedule is not available.",
@@ -112,13 +112,22 @@ export default function Home() {
 
   }
 
-  const displayFirstLastDate = (classDetails:String) => {
+
+  const storePayload = (payloads) => {
+    try {
+      localStorage.setItem('userCache', JSON.stringify(payloads))
+      recordProductStats(`3mCustomer`, payloads)
+    } catch (error) {
+
+    }
+  }
+  const displayFirstLastDate = (classDetails: String) => {
     try {
       if (date.from != undefined && eventType === "Multiple") {
         return (<>
           <div className={`${classDetails}`}>
-            <input className='rounded-md font-md w-40 text-xs ' disabled={true} value={`From : ${moment(date.from).format('LL')}`}/>
-            <input className='rounded-md font-md w-40 text-xs ' disabled={true} value={`To : ${moment(date.to).format('LL')}`}/>
+            <input className='rounded-md font-md w-40 text-xs ' disabled={true} value={`From : ${moment(date.from).format('LL')}`} />
+            <input className='rounded-md font-md w-40 text-xs ' disabled={true} value={`To : ${moment(date.to).format('LL')}`} />
             {/* <div><Badge variant="outline">{moment(date.from).format('LL')}</Badge></div> */}
             {/* {date.to != undefined ? <div><Badge variant="outline">{moment(date.to).format('LL')}</Badge></div> : null} */}
           </div>
@@ -126,7 +135,7 @@ export default function Home() {
       } else {
         return (
           <div className={`${classDetails}`}>
-            <input className='w-48   text-xs mt-2' disabled={true} value={`Event date : ${moment(date.from).format('LL')}`}/>
+            <input className='w-48   text-xs mt-2' disabled={true} value={`Event date : ${moment(date.from).format('LL')}`} />
           </div>
         )
       }
@@ -141,8 +150,8 @@ export default function Home() {
 
   async function fetchProduct() {
     try {
-      let formattedDate = eventType === "Single"  ?  singleDate :  date.from
-      let selectedDated = moment(formattedDate).format('YYYY-MM-DD') 
+      let formattedDate = eventType === "Single" ? singleDate : date.from
+      let selectedDated = moment(formattedDate).format('YYYY-MM-DD')
       const data = {
         id: "Visual", queryType: "filter", storeOwner: "60b1c9a9a001ef1e463d52c2",
         "isAPI": true, "showLimit": true, "number": 8, "deliveryDate": selectedDated
@@ -160,7 +169,7 @@ export default function Home() {
 
   const didTappedService = (item: any) => {
     try {
-      recordProductStats(`Selected service`,item)
+      recordProductStats(`Selected service`, item)
       setSelectedService(item)
       setTimeout(() => {
         if (cartRef.current) {
@@ -185,10 +194,10 @@ export default function Home() {
                 <article className={`rounded-lg border ${isActive ? ' border-gray-300 bg-black p-6' : ' border-gray-300 bg-white p-6'} hover:shadow-lg`}>
                   <div>
                     <p className={`text-sm ${isActive ? 'text-white' : 'text-black'}`}>Price</p>
-  
+
                     <p className={`text-2xl font-medium ${isActive ? 'text-white' : 'text-black'}`}>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(item.price)}<span className='text-xs'>/Day</span></p>
                   </div>
-  
+
                   <div className="mt-1 flex gap-1 text-green-400">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -204,10 +213,10 @@ export default function Home() {
                         d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
                       />
                     </svg>
-  
+
                     <p className="flex gap-2 text-xs">
                       {/* <span className="font-medium"> 67.81% </span> */}
-  
+
                       <span className={`text-xs ${isActive ? 'text-white' : 'text-black'}`}> {item.subtitle} </span>
                     </p>
                   </div>
@@ -215,11 +224,11 @@ export default function Home() {
               </a>
             )
           }
-  
+
         })
         return items
       }
- 
+
     } catch (error) {
       console.log("error rendering", error)
     }
@@ -239,7 +248,7 @@ export default function Home() {
 
             <div className="col-span-2 ... lg:mt-10 mt-20 ">
               <h2 className={`mb-10 text-2xl font-semibold `}>
-              Select Payment Method
+                Select Payment Method
               </h2>
               {AccordionComponent()}
               <div className="row-span-2 col-span-2 ...">
@@ -257,7 +266,7 @@ export default function Home() {
               </h2>         */}
               </div>
             </div>
-       
+
             {/* <Alert className='h-20 bg-[#f7f1e3]'>
   <AlertTitle>Heads up!</AlertTitle>
   <AlertDescription>
@@ -275,111 +284,111 @@ export default function Home() {
       return null
     }
   }
-  const renderEmpty=()=>{
+  const renderEmpty = () => {
     try {
       if (isEmpty) {
         return (
-          <div ref={emptyRef}  className='text-center'>
+          <div ref={emptyRef} className='text-center'>
             <img src="https://cdn.dribbble.com/users/183518/screenshots/2581188/media/ba6518c3a42da81603792166b8fe188f.png?resize=800x600&vertical=center"
-                width={'500'}
-                height={200}
-                className='rounded-lg ml-4 '
-              />
-              <h1 className='text-xs'>
-                Sorry! We are not available on the chosen date, try other one.
-              </h1>
+              width={'500'}
+              height={200}
+              className='rounded-lg ml-4 '
+            />
+            <h1 className='text-xs'>
+              Sorry! We are not available on the chosen date, try other one.
+            </h1>
           </div>
         )
       }
-   
+
     } catch (error) {
-      
+
     }
   }
-  
-  const renderCalendarPicker=()=>{
+
+  const renderCalendarPicker = () => {
     try {
-      return (  <div className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-60">
-      <div className="row-span-3 ...">
-        <style>{css}</style>
-        {eventType === "Single" ?  <Calendar
-          mode={"single"}
-          selected={   singleDate}
-          onDayTouchCancel={(e)=>console.log(e)}
-          onSelect={(e: any) =>  setDateUserSingle(e)}
-          className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
-          modifiersClassNames={{
-            selected: 'my-selected',
-            today: 'my-today'
-          }}
+      return (<div className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-60">
+        <div className="row-span-3 ...">
+          <style>{css}</style>
+          {eventType === "Single" ? <Calendar
+            mode={"single"}
+            selected={singleDate}
+            onDayTouchCancel={(e) => console.log(e)}
+            onSelect={(e: any) => setDateUserSingle(e)}
+            className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
+            modifiersClassNames={{
+              selected: 'my-selected',
+              today: 'my-today'
+            }}
 
-        /> : <Calendar
-        mode={"range"}
-        selected={ date}
-        onDayTouchCancel={(e)=>console.log(e)}
-        onSelect={(e: any) => setDateUser(e)}
-        className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
-        modifiersClassNames={{
-          selected: 'my-selected',
-          today: 'my-today'
-        }}
+          /> : <Calendar
+            mode={"range"}
+            selected={date}
+            onDayTouchCancel={(e) => console.log(e)}
+            onSelect={(e: any) => setDateUser(e)}
+            className={`rounded-md border mr-32 ${status ? 'opacity-10' : 'opacity-100'} `}
+            modifiersClassNames={{
+              selected: 'my-selected',
+              today: 'my-today'
+            }}
 
-      /> }
-       
-      </div>
-      
-      <div className="col-span-2 ... lg:mt-0 mt-10 ">
-   
-        <h2 className={`mb-10 text-2xl font-semibold `}>
-          What date works for you?
-        </h2>
-  <Tabs defaultValue="Single" className="w-[400px] rounded-full " onValueChange={(e)=>selectedEventType(e)}>
-  <TabsList className=" rounded-full">
-    <TabsTrigger value="Single"className=" rounded-full text-xs">One Day Event</TabsTrigger>
-    <TabsTrigger value="Multiple"className=" rounded-full text-xs">Multiple Day Event</TabsTrigger>
-  </TabsList>
+          />}
 
-  <TabsContent value="Single" className=''>
-  <input className='w-48   text-xs mt-10' disabled={true} value={`Event date : ${moment(date.from).format('LL')}`}/>
+        </div>
 
-  </TabsContent>
-  <TabsContent value="Multiple">
-  <p className='text-xs text-gray-700 mt-10'>Selected days: ({daysCounter()}) {displayFirstLastDate("flex flex-col gap-2 mt-4 ...")}</p>
+        <div className="col-span-2 ... lg:mt-0 mt-10 ">
 
-  </TabsContent>
-</Tabs>
-        {/* <p className='text-xs text-gray-700'>Selected days: ({daysCounter()}) {displayFirstLastDate("flex flex-col gap-2 mt-4 ...")}</p> */}
-      </div>
-      
-      <div className="row-span-2 col-span-2 ...">
-        <Button
-          onClick={() => clearDate()}
-          variant={"ghost"} className='rounded-full text-xs mr-2'> Clear</Button>
-        <Button
-          disabled={status}
-          onClick={() => didTappSearch()}
-          variant="outline" className=' rounded-full text-xs hover:shadow-lg bg-black text-white mt-10'>{status ? 'Searching...' : 'Search available slot'}</Button>
+          <h2 className={`mb-10 text-2xl font-semibold `}>
+            What date works for you?
+          </h2>
+          <Tabs defaultValue="Single" className="w-[400px] rounded-full " onValueChange={(e) => selectedEventType(e)}>
+            <TabsList className=" rounded-full">
+              <TabsTrigger value="Single" className=" rounded-full text-xs">One Day Event</TabsTrigger>
+              <TabsTrigger value="Multiple" className=" rounded-full text-xs">Multiple Day Event</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="Single" className=''>
+              <input className='w-48   text-xs mt-10' disabled={true} value={`Event date : ${moment(date.from).format('LL')}`} />
+
+            </TabsContent>
+            <TabsContent value="Multiple">
+              <p className='text-xs text-gray-700 mt-10'>Selected days: ({daysCounter()}) {displayFirstLastDate("flex flex-col gap-2 mt-4 ...")}</p>
+
+            </TabsContent>
+          </Tabs>
+          {/* <p className='text-xs text-gray-700'>Selected days: ({daysCounter()}) {displayFirstLastDate("flex flex-col gap-2 mt-4 ...")}</p> */}
+        </div>
+
+        <div className="row-span-2 col-span-2 ...">
+          <Button
+            onClick={() => clearDate()}
+            variant={"ghost"} className='rounded-full text-xs mr-2'> Clear</Button>
+          <Button
+            disabled={status}
+            onClick={() => didTappSearch()}
+            variant="outline" className=' rounded-full text-xs hover:shadow-lg bg-black text-white mt-10'>{status ? 'Searching...' : 'Search available slot'}</Button>
 
           {/* <div className='w-full bg-gray-500 h-[0.5px] mb-2 mt-2'/> */}
-      </div>
-      
-    </div>)
+        </div>
+
+      </div>)
     } catch (error) {
-      
+
     }
   }
   const renderServicesComponent = () => {
-      
+
     if (products?.[0].price != 0) {
       return <>
 
-<div className='mt-20' ref={scrollRef}/>
-        <div  className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-10 ">
-        <h2 className={`mb-10 text-2xl font-semibold lg:hidden block `}>
-              Select your service
-            </h2>
+        <div className='mt-20' ref={scrollRef} />
+        <div className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-10 ">
+          <h2 className={`mb-10 text-2xl font-semibold lg:hidden block `}>
+            Select your service
+          </h2>
           <div className="row-span-3 ...">
-            
+
             <img src="https://www.hdledisplay.com/wp-content/uploads/2020/08/small-pixel-pitch-led-wall-3.jpg"
               width={'80%%'}
               height={200}
@@ -398,12 +407,12 @@ export default function Home() {
           /> */}
           </div>
           <div className="col-span-2 ... lg:mt-0 mt-10 ">
-          <h2 className={`mb-10 text-2xl font-semibold lg:block  hidden `}>
+            <h2 className={`mb-10 text-2xl font-semibold lg:block  hidden `}>
               Select your service
             </h2>
             {/* <p className='text-xs'>500x500mm</p> */}
             <p className='text-xs'>Number of days {daysCounter()}</p>
-            <div  className="w-full ">
+            <div className="w-full ">
               <div className="w-full  grid lg:grid-cols-3 gap-4 m-2">
 
                 {renderServices()}
@@ -420,7 +429,7 @@ export default function Home() {
                 }
               }, 500)}
               variant="outline" className=' rounded-full hover:shadow-lg bg-black text-white mt-10'>{status ? 'Searching...' : 'Continue'}</Button>
-              
+
           </div>
           {/* <div className='w-full bg-gray-500 h-[0.5px] mb-2 mt-2'/> */}
         </div>
@@ -455,12 +464,12 @@ export default function Home() {
               <h3>{selectedService.title}
                 <span className="text-sm dark:text-violet-400"> X {daysCounter()}</span>
                 <p>
-                {/* <span className="text-sm dark:text-violet-400">{}</span> */}
-                {displayFirstLastDate("")}
-              </p>
-              
+                  {/* <span className="text-sm dark:text-violet-400">{}</span> */}
+                  {displayFirstLastDate("")}
+                </p>
+
               </h3>
-              
+
               <div className="text-right">
                 <span className="block">{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(daysCounter() * selectedService.price)}</span>
 
@@ -557,64 +566,64 @@ export default function Home() {
               height={200}
               className='hover:shadow-lg rounded-lg ml-4 mb-2'
             />
-<img src="https://localflowershop.sgp1.digitaloceanspaces.com/product/1705113100668-PYMY%20LOOKEE%20%281%29.png"
+            <img src="https://localflowershop.sgp1.digitaloceanspaces.com/product/1705113100668-PYMY%20LOOKEE%20%281%29.png"
               width={'200'}
               height={200}
               className='hover:shadow-lg rounded-lg ml-4 mb-2'
             />
 
 
-             Additional 5% of the total cart.
+            Additional 5% of the total cart.
 
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
           <AccordionTrigger disabled={true} className='text-gray-200'>Installment</AccordionTrigger>
-           <AccordionContent className='text-xs'>
+          <AccordionContent className='text-xs'>
             <img src="https://www.bworldonline.com/wp-content/uploads/2022/09/billease-logo.jpg"
               width={'200'}
               height={200}
               className='hover:shadow-lg rounded-lg ml-4'
             />
-                     <img src="https://assets-global.website-files.com/64624bb008de2f11dbf1f3a1/6465f9263eb94044a3743277_HitPay_Blue-min.svg"
+            <img src="https://assets-global.website-files.com/64624bb008de2f11dbf1f3a1/6465f9263eb94044a3743277_HitPay_Blue-min.svg"
               width={'200'}
               height={200}
               className='hover:shadow-lg rounded-lg ml-4'
             />
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdYezi5IEhWjNsRSEP9EdEDt2U9sN3bei49Tk_LRzBukQj3fIjjghemVMPrjjbQMtsiOo&usqp=CAU"
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdYezi5IEhWjNsRSEP9EdEDt2U9sN3bei49Tk_LRzBukQj3fIjjghemVMPrjjbQMtsiOo&usqp=CAU"
               width={'200'}
               height={100}
               className='hover:shadow-lg rounded-lg ml-4'
             />
 
-             Additional 15% of the total cart.
-   
-            
+            Additional 15% of the total cart.
+
+
             {/* Yes. It comes with default styles that matches the other
             components&apos; aesthetic. */}
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3">
           <AccordionTrigger disabled={true} className='text-gray-200'>Credit Card/Debit</AccordionTrigger>
-           <AccordionContent className='text-xs'>
+          <AccordionContent className='text-xs'>
             <img src="https://i.ytimg.com/vi/i09C02151PI/maxresdefault.jpg"
               width={'200'}
               height={200}
               className='hover:shadow-lg rounded-lg ml-4'
             />
-             Additional 15% of the total cart.
+            Additional 15% of the total cart.
             {/* Yes. It's animated by default, but you can disable it if you prefer. */}
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-4">
           <AccordionTrigger >Cash</AccordionTrigger>
-           <AccordionContent className='text-xs'>
+          <AccordionContent className='text-xs'>
             <img src="https://img.freepik.com/premium-vector/money-hand-cartoon-cash-payments-concept-businessman-hands-takes-exchange-money_221062-38.jpg"
               width={'200'}
               height={200}
               className='hover:shadow-lg rounded-lg ml-4'
             />
-           <p>When paying cash, full payment</p>  is required before <span className='font-bold'>{moment(date.from).format('LL')}</span>
+            <p>When paying cash, full payment</p>  is required before <span className='font-bold'>{moment(date.from).format('LL')}</span>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -634,27 +643,35 @@ export default function Home() {
   }
   // type userDateType = {from: Date; to: Date }
   const setDateUser = (date: DateRange) => {
-    if(date.from != undefined) {
+    if (date.from != undefined) {
       setDate({ from: date.from, to: date.to })
       // recordProductStats(`Multple Date `,`Date: ${moment(date.from).toLocaleString()} + ${moment(date.to).toLocaleString()} , daysNumber: ${daysCounter()}`)
     }
   }
-  async function recordProductStats(e:any,date: any) {
+  const checkAccount = () => {
     try {
-        
-        const data = {storeOwner:'3MVisual',cType:'3m Visual Booking Page',cName:"website","data":date,"date":new Date(),action:e}
-        const response = await productStats.put('/Items', data) 
-        return  response
-        
+      let existingCart = localStorage.getItem('refresh_token')
+      return existingCart
     } catch (error) {
-      console.log('error recordProductStats',error)
+      return undefined
+    }
+  }
+  async function recordProductStats(e: any, date: any) {
+    try {
+
+      const data = { storeOwner: '3MVisual', cType: '3m Visual Booking Page', cName: "website", "data": date, "date": new Date(), action: e }
+      const response = await productStats.put('/Items', data)
+      return response
+
+    } catch (error) {
+      console.log('error recordProductStats', error)
     }
   }
   const setDateUserSingle = (date: Date) => {
     console.log(date)
     setSingleDate(date)
-    
-    recordProductStats(`Single Date `,date)
+
+    recordProductStats(`Single Date `, date)
     // setDate({from:date,to:new Date()})
     // if(date.from != undefined) {
     //   setDate({ from: date.from, to: date.to })
@@ -662,10 +679,10 @@ export default function Home() {
   }
   return (
     <>
- <Head>
-<meta name="robots" content="nofollow"/>
-<meta name="googlebot" content="noindex"/>
-  <meta name="keywords" content="SmartDeskPh, Standing Desk in Ph ,Autonomous,
+      <Head>
+        <meta name="robots" content="nofollow" />
+        <meta name="googlebot" content="noindex" />
+        <meta name="keywords" content="SmartDeskPh, Standing Desk in Ph ,Autonomous,
      LED wall,
      Video wall,
      Digital signage,
@@ -689,69 +706,71 @@ export default function Home() {
      Iligan City,
      Cagayan De Oro City
      "/>
-    </Head>
-    <title>{titlePage}</title>
-    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    <Script 
-    id='google-analytics'
-      strategy="afterInteractive"
-      src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63"/>
+      </Head>
+      <title>{titlePage}</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <Script
+        id='google-analytics'
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63" />
 
- <Script
- id='google-analytics'
- async src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63"/>
-<Script id='googleID3'>
- {` window.dataLayer = window.dataLayer || [];
+      <Script
+        id='google-analytics'
+        async src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63" />
+      <Script id='googleID3'>
+        {` window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-5DNHH2RH63');
   `}
-</Script>
-<Head>
+      </Script>
+      <Head>
         <title> </title>
         <meta property="og:Booking" content="3M Visual - Booking" key="Booking" />
-    
+
       </Head>
-    
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-     
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-       </div>
-      </div>
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/3m.png"
-          alt="Next.js Logo"
-          width={100 * 2}
-          height={37 * 2}
-          priority
-        />
-      </div>
-      <div>
-        <h2 className={`mb-3 text-2xl font-semibold mt-10`}>
-          Your LED wall Solution!
-        </h2>
-        {/* <h2 className={`mb-3 text-1xl font-semibold mt-10`}>
+
+      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+
+        <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
+          <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
+          </div>
+        </div>
+        <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
+          <Image
+            className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
+            src="/3m.png"
+            alt="Next.js Logo"
+            width={100 * 2}
+            height={37 * 2}
+            priority
+          />
+        </div>
+        <div>
+          <h2 className={`mb-3 text-2xl font-semibold mt-10`}>
+            Your LED wall Solution!
+          </h2>
+          {/* <h2 className={`mb-3 text-1xl font-semibold mt-10`}>
           Flexible Payment Option
         </h2> */}
-<div className='mt-20'/>
+          <div className='mt-20' />
+          <div>
+            <div><p className='text-xs mb-4 ml-10'>To view the price</p> </div>
+            <Button className='bg-white text-black hover:border  hover:border-blue-500 hover:bg-gray-100 rounded-full' onClick={signinAccount}>
+              <img src="https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png" className="mr-2 h-4 w-4" />
 
- {/* <Button className='bg-white text-black hover:border  hover:border-blue-500 hover:bg-gray-100 rounded-full'  onClick={signinAccount}>
-        <img src="https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png" className="mr-2 h-4 w-4" />
-      
-      Continue with Google
-            </Button> */}
-      </div>
-      {renderCalendarPicker()}
-      {status ? <></> : isEmpty ? renderEmpty() : renderServicesComponent()}
-      {renderCartComponent()}
-      <div className='mb-20' />
+              Continue with Google
+            </Button>
+          </div>
+        </div>
+        {checkAccount() != null ? renderCalendarPicker() : null}
+        {status ? <></> : isEmpty ? renderEmpty() : renderServicesComponent()}
+        {renderCartComponent()}
+        <div className='mb-20' />
 
-      {/* {CheckboxWithText()} */}
-    </main>
+        {/* {CheckboxWithText()} */}
+      </main>
     </>
   )
 }
