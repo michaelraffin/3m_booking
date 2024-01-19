@@ -113,7 +113,7 @@ export default function Home() {
   }
 
 
-  const storePayload = (payloads) => {
+  const storePayload = (payloads:any) => {
     try {
       localStorage.setItem('userCache', JSON.stringify(payloads))
       recordProductStats(`3mCustomer`, payloads)
