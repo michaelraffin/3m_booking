@@ -757,7 +757,8 @@ export default function Home() {
           <div className='mt-20' />
      
         </div>
-        {checkAccount() != null ? renderCalendarPicker() :      <div>
+        {/* checkAccount() != null ? */}
+        {true ? renderCalendarPicker() :      <div>
             <div><p className='text-xs mb-4 ml-10'>To view the price</p> </div>
             <Button className='bg-white text-black hover:border  hover:border-blue-500 hover:bg-gray-100 rounded-full' onClick={signinAccount}>
               <img src="https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png" className="mr-2 h-4 w-4" />
