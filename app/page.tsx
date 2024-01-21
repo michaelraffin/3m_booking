@@ -650,7 +650,7 @@ export default function Home() {
   }
   const checkAccount = () => {
     try {
-      let existingCart = localStorage.getItem('refresh_token')
+      let existingCart = localStorage.getItem('sb-uoaqelztwfzinfesejcv-auth-token')
       return existingCart
     } catch (error) {
       return undefined
