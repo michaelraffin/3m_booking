@@ -47,7 +47,7 @@ export default function Auth() {
           localStorage.setItem('user_profile', JSON.stringify(user));
 
           console.log(e.data)
-          storePayload(e.data)
+          // storePayload(e.data)
           // if (user.user_details === null) {
             router.push('/');
           // } else {
@@ -76,7 +76,7 @@ export default function Auth() {
   const storePayload = (payloads: any) => {
     try {
       localStorage.setItem('userCache', JSON.stringify(payloads))
-      recordProductStats(`3mCustomer`, payloads)
+      // recordProductStats(`3mCustomer`, payloads)
     } catch (error) {
       console.log('storePayload',error)
     }
