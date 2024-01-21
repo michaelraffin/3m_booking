@@ -19,7 +19,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
 import Script from 'next/script'
 import Head from 'next/head'
-import { signinAuth } from '../Utils/login_service'
+import { signinAuth } from '../../Utils/login_service'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 
