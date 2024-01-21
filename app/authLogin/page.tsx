@@ -75,8 +75,8 @@ export default function Auth() {
 
   const storePayload = (payloads: any) => {
     try {
-      // localStorage.setItem('userCache', JSON.stringify(payloads))
-      recordProductStats(`3mCustomer`, payloads)
+      localStorage.setItem('userCache', JSON.stringify(payloads))
+      // recordProductStats(`3mCustomer`, payloads)
     } catch (error) {
       console.log('storePayload',error)
     }
