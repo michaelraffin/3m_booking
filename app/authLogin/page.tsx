@@ -25,13 +25,13 @@ export default function Auth() {
   }
   useEffect(() => {
     try {
-
+      localStorage.clear()
       const accessToken = `${currentUrl}`
       const access_token = new URLSearchParams(accessToken.split('#')[1]).get('access_token');
       const provider_token = new URLSearchParams(accessToken.split('#')[1]).get('provider_token');
       const refresh_token = new URLSearchParams(accessToken.split('#')[1]).get('refresh_token');
 
-      // localStorage.clear()
+      
       localStorage.setItem('access_token', `${access_token}`);
       localStorage.setItem('provider_token', `${provider_token}`);
       localStorage.setItem('refresh_token', `${refresh_token}`);
@@ -76,7 +76,7 @@ export default function Auth() {
   const storePayload = (payloads: any) => {
     try {
       localStorage.setItem('userCache', JSON.stringify(payloads))
-      // recordProductStats(`3mCustomer`, payloads)
+      recordProductStats(`3mCustomer`, payloads)
     } catch (error) {
       console.log('storePayload',error)
     }
