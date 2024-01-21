@@ -26,7 +26,7 @@ export default function Auth() {
   useEffect(() => {
     try {
       localStorage.clear()
- 
+      console.log("WELCOME TO AUTH")
       const accessToken = `${currentUrl}`
       const access_token = new URLSearchParams(accessToken.split('#')[1]).get('access_token');
       const provider_token = new URLSearchParams(accessToken.split('#')[1]).get('provider_token');
