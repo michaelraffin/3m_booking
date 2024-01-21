@@ -30,13 +30,10 @@ export default function Auth() {
       const access_token = new URLSearchParams(accessToken.split('#')[1]).get('access_token');
       const provider_token = new URLSearchParams(accessToken.split('#')[1]).get('provider_token');
       const refresh_token = new URLSearchParams(accessToken.split('#')[1]).get('refresh_token');
-
-      
-      // localStorage.setItem('access_token', `${access_token}`);
+        // localStorage.setItem('access_token', `${access_token}`);
       // localStorage.setItem('provider_token', `${provider_token}`);
       // localStorage.setItem('refresh_token', `${refresh_token}`);
       // localStorage.setItem('uuid', `${refresh_token}`);
-
       // console.log('welcome to auth')
 
       getSession().then((e) => {
@@ -49,7 +46,7 @@ export default function Auth() {
           console.log(e.data)
           // storePayload(e.data)
           // if (user.user_details === null) {
-            router.push('/');
+            router.push('/dashboard');
           // } else {
           //   router.push('/');
           // }
