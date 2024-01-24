@@ -58,7 +58,7 @@ export default function Auth() {
     } catch (error) {
       console.log('account setup ', error)
     }
-  },[])
+  })
 
 
   const storePayload = (payloads: any) => {

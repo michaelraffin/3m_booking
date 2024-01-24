@@ -113,7 +113,7 @@ export default function Home() {
   }
 
 
-  const storePayload = (payloads:any) => {
+  const storePayload = (payloads: any) => {
     try {
       localStorage.setItem('userCache', JSON.stringify(payloads))
       recordProductStats(`3mCustomer`, payloads)
@@ -390,8 +390,8 @@ export default function Home() {
           <div className="row-span-3 ...">
 
             <img
-            className='rounded-md hover:shadow-lg'
-             src="https://localflowershop.sgp1.digitaloceanspaces.com/product/1706074522644-lower.png"
+              className='rounded-md hover:shadow-lg'
+              src="https://localflowershop.sgp1.digitaloceanspaces.com/product/1706074522644-lower.png"
               width={'80%%'}
               height={200}
             />
@@ -519,7 +519,7 @@ export default function Home() {
             </div>
             <div className="flex justify-between">
               <span className=''>Discount  <span className='text-xs'>{"(January Discount)"}</span></span>
-             
+
               <span className='text-red-500'>-{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(1500)}</span>
             </div>
           </div>
@@ -726,15 +726,6 @@ export default function Home() {
   gtag('config', 'G-5DNHH2RH63');
   `}
       </Script>
-      <Script >
-{` (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "kqw0qreuki");
-    `}
-</Script>
-
       <Head>
         <title> </title>
         <meta property="og:Booking" content="3M Visual - Booking" key="Booking" />
@@ -765,17 +756,17 @@ export default function Home() {
           Flexible Payment Option
         </h2> */}
           <div className='mt-20' />
-     
+
         </div>
         {/* checkAccount() != null ? */}
-        {true != null ? renderCalendarPicker() :      <div>
-            <div><p className='text-xs mb-4 ml-10'>To view the price</p> </div>
-            <Button className='bg-white text-black hover:border  hover:border-blue-500 hover:bg-gray-100 rounded-full' onClick={signinAccount}>
-              <img src="https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png" className="mr-2 h-4 w-4" />
+        {true != null ? renderCalendarPicker() : <div>
+          <div><p className='text-xs mb-4 ml-10'>To view the price</p> </div>
+          <Button className='bg-white text-black hover:border  hover:border-blue-500 hover:bg-gray-100 rounded-full' onClick={signinAccount}>
+            <img src="https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png" className="mr-2 h-4 w-4" />
 
-              Continue with Google
-            </Button>
-          </div>}
+            Continue with Google
+          </Button>
+        </div>}
         {status ? <></> : isEmpty ? renderEmpty() : renderServicesComponent()}
         {renderCartComponent()}
         <div className='mb-20' />
