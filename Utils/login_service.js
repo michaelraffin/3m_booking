@@ -61,8 +61,8 @@ export const signinAuth= async()=>{
         return supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-              // redirectTo:'http://192.168.1.148:3000/authLogin',
-                redirectTo:'https://booking.3mevents.com/authLogin' , //'http://192.168.1.148:3000/authLogin',
+              redirectTo:'http://192.168.1.148:3000/authLogin',
+                // redirectTo:'https://booking.3mevents.com/authLogin' , //'http://192.168.1.148:3000/authLogin',
               }
           },)}
           ,'signInWithOAuth')

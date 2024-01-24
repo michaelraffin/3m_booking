@@ -388,10 +388,9 @@ export default function Home() {
             Select your service
           </h2>
           <div className="row-span-3 ...">
-
-            <img src="https://www.hdledisplay.com/wp-content/uploads/2020/08/small-pixel-pitch-led-wall-3.jpg"
+            <img src="https://localflowershop.sgp1.digitaloceanspaces.com/product/1706074522644-lower.png"
               width={'80%%'}
-              height={200}
+              height={'100%'}
             />
             {/* <Calendar
             mode="range"
@@ -518,8 +517,10 @@ export default function Home() {
               </div> */}
             </div>
             <div className="flex justify-between">
-              <span>Discount</span>
-              <span>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(0)}</span>
+            <span className=''>Discount  <span className='text-xs'>{"(January Discount)"}</span></span>
+             
+             <span className='text-red-500'>-{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(1500)}</span>
+ 
             </div>
           </div>
           <div className="pt-4 space-y-2">
@@ -538,8 +539,8 @@ export default function Home() {
               <div className="flex justify-between">
                 <span>Total</span>
 
-                <span className="font-semibold">{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(daysCounter() * selectedService.price)}</span>
-              </div>
+                <span className="font-semibold">{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(daysCounter() * (selectedService.price - 1500))}</span>
+                  </div>
               {/* <Button className='rounded-full bg-black text-xs'>
         Book now
       </Button> */}

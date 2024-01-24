@@ -31,29 +31,29 @@ export default function Auth() {
       const access_token = new URLSearchParams(accessToken.split('#')[1]).get('access_token');
       const provider_token = new URLSearchParams(accessToken.split('#')[1]).get('provider_token');
       const refresh_token = new URLSearchParams(accessToken.split('#')[1]).get('refresh_token');
-      router.replace('/dashboard');
-        // localStorage.setItem('access_token', `${access_token}`);
-      // localStorage.setItem('provider_token', `${provider_token}`);
-      // localStorage.setItem('refresh_token', `${refresh_token}`);
-      // localStorage.setItem('uuid', `${refresh_token}`);
-      // console.log('welcome to auth')
+      // router.replace('/dashboard');
+        localStorage.setItem('access_token', `${access_token}`);
+      localStorage.setItem('provider_token', `${provider_token}`);
+      localStorage.setItem('refresh_token', `${refresh_token}`);
+      localStorage.setItem('uuid', `${refresh_token}`);
+      console.log('welcome to auth')
 
-      // getSession().then((e) => {
-      //   console.log(e)
-      //   localStorage.setItem('uuid', `${e.data.user.id}`);
-      //   getProfile().then((e) => {
-      //     let user = e.data[0]
-      //     localStorage.setItem('user_profile', JSON.stringify(user));
+      getSession().then((e) => {
+        console.log(e)
+        localStorage.setItem('uuid', `${e.data.user.id}`);
+        getProfile().then((e) => {
+          let user = e.data[0]
+          localStorage.setItem('user_profile', JSON.stringify(user));
 
-      //     console.log(e.data)
-      //     // storePayload(e.data)
-      //     // if (user.user_details === null) {
-      //       router.push('/dashboard');
-      //     // } else {
-      //     //   router.push('/');
-      //     // }
-      //   })
-      // })
+          console.log(e.data)
+          // storePayload(e.data)
+          // if (user.user_details === null) {
+            router.push('/dashboard');
+          // } else {
+          //   router.push('/');
+          // }
+        })
+      })
     } catch (error) {
       console.log('account setup ', error)
     }
