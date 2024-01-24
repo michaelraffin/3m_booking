@@ -24,7 +24,6 @@ const getURL = () => {
 
 export const getSession = async ()=>{
   return  await networkService(()=> {
-    // const { data: { user } } = await supabase.auth.getUser() 
       return supabase.auth.getUser()
   })
   }
@@ -61,8 +60,9 @@ export const signinAuth= async()=>{
         return supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
+              redirectTo: getURL()
               // redirectTo:'http://192.168.1.148:3000/authLogin',
-                redirectTo:'https://booking.3mevents.com/authLogin' , //'http://192.168.1.148:3000/authLogin',
+                // redirectTo:'https://booking.3mevents.com/authLogin' , //'http://192.168.1.148:3000/authLogin',
               }
           },)}
           ,'signInWithOAuth')
