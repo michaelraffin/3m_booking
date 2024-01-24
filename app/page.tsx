@@ -389,7 +389,9 @@ export default function Home() {
           </h2>
           <div className="row-span-3 ...">
 
-            <img src="https://www.hdledisplay.com/wp-content/uploads/2020/08/small-pixel-pitch-led-wall-3.jpg"
+            <img
+            className='rounded-md hover:shadow-lg'
+             src="https://localflowershop.sgp1.digitaloceanspaces.com/product/1706074522644-lower.png"
               width={'80%%'}
               height={200}
             />
@@ -408,13 +410,11 @@ export default function Home() {
           </div>
           <div className="col-span-2 ... lg:mt-0 mt-10 ">
             <h2 className={`mb-10 text-2xl font-semibold lg:block  hidden `}>
-              Select your service
+              Led Wall rental Service
             </h2>
-            {/* <p className='text-xs'>500x500mm</p> */}
             <p className='text-xs'>Number of days {daysCounter()}</p>
             <div className="w-full ">
               <div className="w-full  grid lg:grid-cols-3 gap-4 m-2">
-
                 {renderServices()}
               </div></div>
           </div>
@@ -518,8 +518,9 @@ export default function Home() {
               </div> */}
             </div>
             <div className="flex justify-between">
-              <span>Discount</span>
-              <span>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(0)}</span>
+              <span className=''>Discount  <span className='text-xs'>{"(January Discount)"}</span></span>
+             
+              <span className='text-red-500'>-{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(1500)}</span>
             </div>
           </div>
           <div className="pt-4 space-y-2">
@@ -538,7 +539,7 @@ export default function Home() {
               <div className="flex justify-between">
                 <span>Total</span>
 
-                <span className="font-semibold">{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(daysCounter() * selectedService.price)}</span>
+                <span className="font-semibold">{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(daysCounter() * (selectedService.price - 1500))}</span>
               </div>
               {/* <Button className='rounded-full bg-black text-xs'>
         Book now
