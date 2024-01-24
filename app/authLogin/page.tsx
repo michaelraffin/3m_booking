@@ -31,11 +31,12 @@ export default function Auth() {
       const access_token = new URLSearchParams(accessToken.split('#')[1]).get('access_token');
       const provider_token = new URLSearchParams(accessToken.split('#')[1]).get('provider_token');
       const refresh_token = new URLSearchParams(accessToken.split('#')[1]).get('refresh_token');
-      // router.replace('/dashboard');
-        localStorage.setItem('access_token', `${access_token}`);
-      localStorage.setItem('provider_token', `${provider_token}`);
-      localStorage.setItem('refresh_token', `${refresh_token}`);
-      localStorage.setItem('uuid', `${refresh_token}`);
+  
+     
+      localStorage.setItem('access_token',  JSON.stringify(access_token));
+      localStorage.setItem('provider_token', JSON.stringify(provider_token)  );
+      localStorage.setItem('refresh_token',JSON.stringify(refresh_token)   );
+      localStorage.setItem('uuid', JSON.stringify(refresh_token)   );
     
 
       getSession().then((e) => {
