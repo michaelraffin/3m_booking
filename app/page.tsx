@@ -683,7 +683,7 @@ export default function Home() {
       <Head>
         <meta name="robots" content="nofollow" />
         <meta name="googlebot" content="noindex" />
-        <meta name="keywords" content="SmartDeskPh, Standing Desk in Ph ,Autonomous,
+        <meta name="keywords" content="LED wall, LED wall Rental,
      LED wall,
      Video wall,
      Digital signage,
@@ -726,6 +726,15 @@ export default function Home() {
   gtag('config', 'G-5DNHH2RH63');
   `}
       </Script>
+      <Script >
+{` (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "kqw0qreuki");
+    `}
+</Script>
+
       <Head>
         <title> </title>
         <meta property="og:Booking" content="3M Visual - Booking" key="Booking" />

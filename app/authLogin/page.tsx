@@ -58,19 +58,7 @@ export default function Auth() {
     } catch (error) {
       console.log('account setup ', error)
     }
-
-
-
-
-
-
-    //Redirect when Profile is empty
-    // setTimeout(() => {
-
-    //     router.push('/redirect');
-    //   }, 3000);
-
-  })
+  },[])
 
 
   const storePayload = (payloads: any) => {
