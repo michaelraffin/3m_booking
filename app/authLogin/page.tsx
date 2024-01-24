@@ -37,7 +37,7 @@ export default function Auth() {
       localStorage.setItem('provider_token', JSON.stringify(provider_token)  );
       localStorage.setItem('refresh_token',JSON.stringify(refresh_token)   );
       localStorage.setItem('uuid', JSON.stringify(refresh_token)   );
-    
+  
 
       getSession().then((e) => {
         console.log(e)
