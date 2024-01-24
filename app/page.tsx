@@ -710,20 +710,21 @@ export default function Home() {
       </Head>
       <title>{titlePage}</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      G
       <Script
         id='google-analytics'
         strategy="afterInteractive"
-        src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63" />
+        src="https://www.googletagmanager.com/gtag/js?id=G-WH954TW2JS" />
 
       <Script
         id='google-analytics'
-        async src="https://www.googletagmanager.com/gtag/js?id=G-5DNHH2RH63" />
+        async src="https://www.googletagmanager.com/gtag/js?id=G-WH954TW2JS" />
       <Script id='googleID3'>
         {` window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-5DNHH2RH63');
+  gtag('config', 'G-WH954TW2JS');
   `}
       </Script>
       <Script id="text/javascript" type="text/javascript">
