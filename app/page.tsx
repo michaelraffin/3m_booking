@@ -39,15 +39,15 @@ export default function Home() {
   }]);
   const [status, setStatus] = useState(false)
   const [selectedService, setSelectedService] = useState<{
-    title: String | null; id: String | null; price: number
-  }>({ title: null, id: null, price: 0 })
+    title: String | null; id: String | null; price: number,imgUrl:String | null,discountedValue:number
+  }>({ title: null, id: null, price: 0,imgUrl: null,discountedValue:0 })
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
   const emptyRef = useRef<HTMLDivElement>(null);
 
   const clearDate = () => {
-    setSelectedService({ title: null, id: null, price: 0 })
+    setSelectedService({ title: null, id: null, price: 0 ,imgUrl:null,discountedValue:0})
     setProduct([{ id: null, title: null, price: 0, subtitle: null }])
     setDate({ from: new Date(), to: new Date() });
 
@@ -391,7 +391,7 @@ export default function Home() {
 
             <img
               className='rounded-md hover:shadow-lg'
-              src="https://localflowershop.sgp1.digitaloceanspaces.com/product/1706074522644-lower.png"
+              src={selectedService.imgUrl}
               width={'80%%'}
               height={200}
             />
@@ -518,9 +518,9 @@ export default function Home() {
               </div> */}
             </div>
             <div className="flex justify-between">
-              <span className=''>Discount  <span className='text-xs'>{"(January Discount)"}</span></span>
+              <span className=''>Discount  <span className='text-xs'></span></span>
 
-              <span className='text-red-500'>-{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(1500)}</span>
+              <span className='text-red-500'>-{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(selectedService.discountedValue)}</span>
             </div>
           </div>
           <div className="pt-4 space-y-2">
@@ -539,7 +539,7 @@ export default function Home() {
               <div className="flex justify-between">
                 <span>Total</span>
 
-                <span className="font-semibold">{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(daysCounter() * (selectedService.price - 1500))}</span>
+                <span className="font-semibold">{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(daysCounter() * (selectedService.price - selectedService.discountedValue))}</span>
               </div>
               {/* <Button className='rounded-full bg-black text-xs'>
         Book now
