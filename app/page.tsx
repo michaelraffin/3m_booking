@@ -39,15 +39,15 @@ export default function Home() {
   }]);
   const [status, setStatus] = useState(false)
   const [selectedService, setSelectedService] = useState<{
-    title: String | null; id: String | null; price: number,imgUrl:String ,discountedValue:number
-  }>({ title: null, id: null, price: 0,imgUrl: "",discountedValue:0 })
+    title: String | null; id: String | null; price: number, imgUrl: string, discountedValue: number
+  }>({ title: null, id: null, price: 0, imgUrl: "", discountedValue: 0 })
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
   const emptyRef = useRef<HTMLDivElement>(null);
 
   const clearDate = () => {
-    setSelectedService({ title: null, id: null, price: 0 ,imgUrl:"",discountedValue:0})
+    setSelectedService({ title: null, id: null, price: 0, imgUrl: "", discountedValue: 0 })
     setProduct([{ id: null, title: null, price: 0, subtitle: null }])
     setDate({ from: new Date(), to: new Date() });
 
@@ -728,13 +728,13 @@ export default function Home() {
   `}
       </Script>
       <Script id="text/javascript" type="text/javascript">
-{`(function(c,l,a,r,i,t,y){
+        {`(function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "kqw0qreuki");
     `}
-</Script>
+      </Script>
       <Head>
         <title> </title>
         <meta property="og:Booking" content="3M Visual - Booking" key="Booking" />
