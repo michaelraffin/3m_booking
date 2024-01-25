@@ -39,15 +39,15 @@ export default function Home() {
   }]);
   const [status, setStatus] = useState(false)
   const [selectedService, setSelectedService] = useState<{
-    title: String | null; id: String | null; price: number,imgUrl:String | null,discountedValue:number
-  }>({ title: null, id: null, price: 0,imgUrl: null,discountedValue:0 })
+    title: String | null; id: String | null; price: number,imgUrl:String ,discountedValue:number
+  }>({ title: null, id: null, price: 0,imgUrl: "",discountedValue:0 })
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
   const emptyRef = useRef<HTMLDivElement>(null);
 
   const clearDate = () => {
-    setSelectedService({ title: null, id: null, price: 0 ,imgUrl:null,discountedValue:0})
+    setSelectedService({ title: null, id: null, price: 0 ,imgUrl:"",discountedValue:0})
     setProduct([{ id: null, title: null, price: 0, subtitle: null }])
     setDate({ from: new Date(), to: new Date() });
 
