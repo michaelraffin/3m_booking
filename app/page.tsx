@@ -308,8 +308,8 @@ export default function Home() {
 
   const renderCalendarPicker = () => {
     try {
-      return (<div className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-60">
-        <div className="row-span-3 ...">
+      return (<div className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-60  ">
+        <div className="row-span-3 lg:ml-0 ml-20  ...">
           <style>{css}</style>
           {eventType === "Single" ? <Calendar
             mode={"single"}
@@ -337,7 +337,7 @@ export default function Home() {
 
         </div>
 
-        <div className="col-span-2 ... lg:mt-0 mt-10 ">
+        <div className="col-span-2 ... lg:mt-0 mt-10 ml-20">
 
           <h2 className={`mb-10 text-2xl font-semibold `}>
             What date works for you?
@@ -360,7 +360,7 @@ export default function Home() {
           {/* <p className='text-xs text-gray-700'>Selected days: ({daysCounter()}) {displayFirstLastDate("flex flex-col gap-2 mt-4 ...")}</p> */}
         </div>
 
-        <div className="row-span-2 col-span-2 ...">
+        <div className="row-span-2 col-span-2  ml-20 ...">
           <Button
             onClick={() => clearDate()}
             variant={"ghost"} className='rounded-full text-xs mr-2'> Clear</Button>
@@ -757,13 +757,13 @@ export default function Home() {
             priority
           />
         </div>
-        <div>
+        <div className='grid grid-rows-4  justify-center align-middle content-center'>
           <h2 className={`mb-3 text-2xl font-semibold mt-10`}>
             Your LED wall Solution!
           </h2>
-          {/* <h2 className={`mb-3 text-1xl font-semibold mt-10`}>
-          Flexible Payment Option
-        </h2> */}
+         <h2 className={`mb-3 text-1xl font-semibold mt-10`}>
+        Get a free qoute
+        </h2> 
           <div className='mt-20' />
 
         </div>
