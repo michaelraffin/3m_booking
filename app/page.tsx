@@ -39,15 +39,15 @@ export default function Home() {
   }]);
   const [status, setStatus] = useState(false)
   const [selectedService, setSelectedService] = useState<{
-    title: String | null; id: String | null; price: number, imgUrl: string, discountedValue: number
-  }>({ title: null, id: null, price: 0, imgUrl: "", discountedValue: 0 })
+    title: String | null; id: String | null; price: number, imgUrl: string, discountedValue: number,discountedTitle:string
+  }>({ title: null, id: null, price: 0, imgUrl: "", discountedValue: 0 ,discountedTitle:""})
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLDivElement>(null);
   const emptyRef = useRef<HTMLDivElement>(null);
 
   const clearDate = () => {
-    setSelectedService({ title: null, id: null, price: 0, imgUrl: "", discountedValue: 0 })
+    setSelectedService({ title: null, id: null, price: 0, imgUrl: "", discountedValue: 0 ,discountedTitle:"" })
     setProduct([{ id: null, title: null, price: 0, subtitle: null }])
     setDate({ from: new Date(), to: new Date() });
 
@@ -518,7 +518,8 @@ export default function Home() {
               </div> */}
             </div>
             <div className="flex justify-between">
-              <span className=''>Discount  <span className='text-xs'></span></span>
+              <span className=''>Discount  <span className='text-xs' style={{fontSize:11}}>{selectedService.discountedTitle}</span></span>
+              <br/>
 
               <span className='text-red-500'>-{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(selectedService.discountedValue)}</span>
             </div>
@@ -747,6 +748,29 @@ export default function Home() {
   gtag('config', 'G-WH954TW2JS');
   `}
       </Script>
+
+
+
+
+      <Script
+        id='google-analytics'
+        async src="https://www.googletagmanager.com/gtag/js?id=G-WCSXNGW7NJ" />
+      <Script id='googleID3'>
+        {` window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WCSXNGW7NJ');
+  `}
+      </Script>
+
+
+
+
+
+
+
+
       <Script id="text/javascript" type="text/javascript">
         {`(function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
