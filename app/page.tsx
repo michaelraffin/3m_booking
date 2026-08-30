@@ -52,6 +52,7 @@ export default function Home() {
       subtitle: null,
     },
   ]);
+  const [cartStatus, showCart] = useState(true);
   const [status, setStatus] = useState(false);
   const [selectedService, setSelectedService] = useState<{
     title: String | null;
@@ -306,17 +307,18 @@ export default function Home() {
     try {
       if (selectedService.price != 0) {
         return (
-          <div
-            ref={cartRef}
-            className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-20"
-          >
-            <div className="col-span-2 ... lg:mt-10 mt-20 ">
-              <h2 className={`mb-10 text-2xl font-semibold `}>
-                Select Payment Method
-              </h2>
-              {AccordionComponent()}
-              <div className="row-span-2 col-span-2 ...">
-                {/* <Image
+          <>
+            <div
+              ref={cartRef}
+              className="lg:grid flex flex-col lg:grid-rows-3 grid-flow-col gap-4 mt-20"
+            >
+              <div className="col-span-2 ... lg:mt-10 mt-20 ">
+                <h2 className={`mb-10 text-2xl font-semibold `}>
+                  Select Payment Method
+                </h2>
+                {AccordionComponent()}
+                <div className="row-span-2 col-span-2 ...">
+                  {/* <Image
         src="/mop.jpg"
         alt="Vercel Logo"
         className="dark:invert"
@@ -325,20 +327,21 @@ export default function Home() {
         priority
       /> */}
 
-                {/* <h2 className={`mb-3 text-1xl font-semibold mt-10`}>
+                  {/* <h2 className={`mb-3 text-1xl font-semibold mt-10`}>
                 Flexible Payment Option
               </h2>         */}
+                </div>
               </div>
-            </div>
 
-            {/* <Alert className='h-20 bg-[#f7f1e3]'>
+              {/* <Alert className='h-20 bg-[#f7f1e3]'>
   <AlertTitle>Heads up!</AlertTitle>
   <AlertDescription>
     You can add components and dependencies to your app using the cli.
   </AlertDescription>
 </Alert> */}
-            <div className="row-span-3 ... mt-20 lg:mt-0">{renderCart()}</div>
-          </div>
+              <div className="row-span-3 ... mt-20 lg:mt-0">{renderCart()}</div>
+            </div>
+          </>
         );
       }
     } catch (error) {
@@ -525,6 +528,34 @@ export default function Home() {
       );
     }
   };
+
+  const processOrder = () => {
+    const orderId = Math.random().toString(36).substring(2, 8).toUpperCase();
+
+    const content = () => {
+      return (
+        <div className="lg:grid flex  mt-20">
+          <div className="col-span-2 ... lg:mt-10 mt-20 ">
+            <h2 className={`mb-10 text-2xl font-semibold `}>
+              Order Submitted Successfully
+            </h2>
+            <p className={`mb-10 text-sm w-1/2 `}>
+              Your order <span className="font-bold">{orderId}</span> has been
+              submitted. Please send this confirmation to our social media
+              account to proceed.
+            </p>
+          </div>
+          <Button
+            className="bg-black text-white  rounded-full"
+            onClick={() => showCart(true)}
+          >
+            Continue
+          </Button>
+        </div>
+      );
+    };
+    return content();
+  };
   function CheckboxWithText() {
     return (
       <div className="items-top flex space-x-2">
@@ -678,6 +709,14 @@ export default function Home() {
 
               {/* <button type="button" className="w-full py-2 font-semibold border rounded dark:bg-violet-400 dark:text-gray-900 dark:border-violet-400">Go to checkout</button> */}
             </div>
+            <Button
+              disabled={status}
+              onClick={() => showCart(false)}
+              variant="outline"
+              className=" rounded-full hover:shadow-lg bg-black text-white mt-20"
+            >
+              {status ? "Searching..." : "Place Booking"}
+            </Button>
           </div>
         </div>
       );
@@ -994,8 +1033,16 @@ export default function Home() {
             </Button>
           </div>
         )}
-        {status ? <></> : isEmpty ? renderEmpty() : renderServicesComponent()}
-        {renderCartComponent()}
+        {cartStatus ? (
+          status ? (
+            <></>
+          ) : isEmpty ? (
+            renderEmpty()
+          ) : (
+            renderServicesComponent()
+          )
+        ) : null}
+        {cartStatus ? renderCartComponent() : processOrder()}
         <div className="mb-20" />
 
         {/* {CheckboxWithText()} */}
