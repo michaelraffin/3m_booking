@@ -73,7 +73,7 @@ export default function FormlessLanding() {
 
         {/* CTA Button */}
         <div>
-          <a href="tel:+639976473649">
+          <a href="http://www.3mvisual.com/contactus">
             <button className="bg-black hover:bg-neutral-800 text-white text-xs md:text-sm font-normal py-2.5 px-6 rounded-full transition-all duration-200">
               Contact us
             </button>

@@ -6,6 +6,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { isSameDay } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import Landing from "./component/landing";
+import Footer from "./component/Footer";
 import {
   Accordion,
   AccordionContent,
@@ -1047,6 +1048,7 @@ export default function Home() {
 
         {/* {CheckboxWithText()} */}
       </main>
+      <Footer />
     </>
   );
 }
