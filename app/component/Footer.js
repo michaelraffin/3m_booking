@@ -4,8 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 export default function Footer() {
   return (
-    <footer className="pb-4 text-gray-200">
-      <div className="max-w-5xl xl:max-w-5xl mx-auto divide-y divide-gray-900 px-4 sm:px-6 md:px-8"></div>
+    <footer className=" text-gray-200">
+      <div className="bg-black  h-4 w-full border-0" />
+      <div className="max-w-5xl xl:max-w-5xl mx-auto divide-y  px-4 sm:px-6 md:px-8"></div>
       <motion.footer
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -84,6 +85,7 @@ export default function Footer() {
           />
         </div>
       </motion.div>
+      <div className="bg-black  h-4 w-full border-0" />
     </footer>
   );
 }
