@@ -16,7 +16,7 @@ export default function Footer() {
         style={{ borderTop: "1px solid rgba(255,255,255,0.10)" }}
       >
         <div className="text-lg  text-white uppercase tracking-widest">
-          3MVisual -{" "}
+          3M Visual Event Innovation OPC
           <div className="flex justify-center rounded">
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/7/7e/SEC_Philippines_Logo_Official.png"
