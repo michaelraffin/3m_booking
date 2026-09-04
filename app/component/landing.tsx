@@ -93,9 +93,12 @@ export default function FormlessLanding() {
           transform ideas into unforgettable event experiences.
         </p>
 
-        <button className="bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm py-3 px-8 rounded-full shadow-sm hover:shadow transition-all duration-200">
+        <a
+          href="#event-solution"
+          className="bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm py-3 px-8 rounded-full shadow-sm hover:shadow transition-all duration-200"
+        >
           Continue below
-        </button>
+        </a>
       </main>
 
       {/* --- Footer Details --- */}
@@ -107,7 +110,7 @@ export default function FormlessLanding() {
 
         {/* Scroll Indicator */}
         <div className="w-full md:w-1/3 flex items-center justify-center gap-1.5 cursor-pointer hover:text-black transition-colors">
-          <span>scroll</span>
+          <span></span>
           <svg
             className="w-3.5 h-3.5 stroke-[1.5]"
             fill="none"
@@ -124,9 +127,9 @@ export default function FormlessLanding() {
 
         {/* Right Footer Tagline */}
         <div className="w-full md:w-1/3 text-center md:text-right leading-tight">
-          A digital environment for focused thinking,
+          {/*A digital environment for focused thinking,*/}
           <br />
-          structured creativity, and future-ready solutions.
+          {/*structured creativity, and future-ready solutions.*/}
         </div>
       </footer>
     </div>

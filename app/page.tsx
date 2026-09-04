@@ -1006,7 +1006,10 @@ export default function Home() {
           />
         </div>
         <div className="grid grid-rows-4  justify-center align-middle content-center">
-          <h2 className={`mb-3 text-2xl font-semibold mt-10`}>
+          <h2
+            id="event-solution"
+            className={`mb-3 text-2xl font-semibold mt-10 scroll-mt-8`}
+          >
             Your Event Solution!
           </h2>
           <h2 className={`mb-3 text-1xl font-semibold mt-10`}>
