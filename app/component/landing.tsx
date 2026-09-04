@@ -46,7 +46,7 @@ export default function FormlessLanding() {
       <header className="relative z-10 flex items-center justify-between px-6 md:px-12 py-6 w-full max-w-7xl mx-auto">
         {/* Brand Logo */}
         <div className="text-xl md:text-2xl font-semibold tracking-tight">
-          3MVisual Booking
+          3M Visual Event Innovation OPC
         </div>
 
         {/* Navigation Links */}
@@ -94,7 +94,7 @@ export default function FormlessLanding() {
         </p>
 
         <button className="bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm py-3 px-8 rounded-full shadow-sm hover:shadow transition-all duration-200">
-          Enter the space
+          Continue below
         </button>
       </main>
 
